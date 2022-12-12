@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 0.7)",
     fontWeight: "700",
     fontSize: 16,
-    fontFamily: "Lato-Bold",
+    fontFamily: "Helvetica-BoldOblique",
   },
   headerView: {
     height: 50,

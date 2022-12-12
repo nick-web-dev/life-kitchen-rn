@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 0.7)",
     fontWeight: "700",
     fontSize: 14,
-    fontFamily: "Lato-Bold",
+    fontFamily: "Helvetica-BoldOblique",
   },
   textStyle: {
     padding: 10,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 0.7)",
     fontWeight: "700",
     fontSize: 14,
-    fontFamily: "Lato-Bold",
+    fontFamily: "Helvetica-BoldOblique",
   },
   tileView: {
     height: 300,

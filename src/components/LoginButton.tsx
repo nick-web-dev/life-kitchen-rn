@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import RNText from './Text';
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import RNText from "./Text";
 
 interface Props {
   onPress: any;
@@ -17,9 +17,10 @@ const LoginButton = ({ onPress, clickable, btnStyles, label }: Props) => {
       style={[
         btnStyles ? btnStyles : styles.selectBtn,
         clickable
-          ? { backgroundColor: '#0080FE' }
-          : { backgroundColor: '#D4D6FA' },
-      ]}>
+          ? { backgroundColor: "#0080FE" }
+          : { backgroundColor: "#D4D6FA" },
+      ]}
+    >
       <RNText style={styles.textStyle} label={label} />
     </TouchableOpacity>
   );
@@ -27,17 +28,17 @@ const LoginButton = ({ onPress, clickable, btnStyles, label }: Props) => {
 
 const styles = StyleSheet.create({
   textStyle: {
-    alignSelf: 'center',
-    color: 'rgba(0, 0, 0, 0.7)',
-    fontWeight: 'bold',
+    alignSelf: "center",
+    color: "rgba(0, 0, 0, 0.7)",
+    fontWeight: "bold",
     fontSize: 14,
-    fontFamily: 'Lato-Bold',
+    fontFamily: "Helvetica-BoldOblique",
   },
   selectBtn: {
     height: 56,
     borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 10,
   },
 });

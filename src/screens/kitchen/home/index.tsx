@@ -1,11 +1,11 @@
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import MainHeader from "../../components/MainHeader";
+import MainHeader from "../../../components/MainHeader";
 
-const App = () => {
+const Home = () => {
   return (
     <SafeAreaView style={styles.mainView}>
-      <MainHeader headerLable={"MAINSCREEN"} />
+      <MainHeader headerLable={"KITCHN SCREEN"} />
     </SafeAreaView>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Home;
