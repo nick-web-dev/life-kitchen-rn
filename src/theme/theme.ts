@@ -2,8 +2,13 @@ import { createTheme } from "@shopify/restyle";
 
 const palette = {
   greenPrimary: "#1ABE73",
+  secondaryGreen: "rgba(26, 190, 115, 0.5)",
   white: "#FFFFFF",
   transparent: "transparent",
+  black: "#000000",
+
+  grey1: "#2C2C2C",
+  grey2: "rgba(255, 255, 255, 0.5)",
 };
 
 const commonFontStyles = {
@@ -23,9 +28,14 @@ const commonCTAStyles = {
 
 export const theme = createTheme({
   colors: {
-    brandGree: palette.greenPrimary,
+    brandGreen: palette.greenPrimary,
+    secondary: palette.secondaryGreen,
     white: palette.white,
     transparent: palette.transparent,
+    black: palette.black,
+
+    grey1: palette.grey1,
+    grey2: palette.grey2,
   },
   spacing: {
     "0": 0,
@@ -240,11 +250,11 @@ export const theme = createTheme({
   buttonVariants: {
     primary: {
       ...commonCTAStyles,
-      backgroundColor: "brandOrange",
+      backgroundColor: "brandGreen",
     },
     secondary: {
       ...commonCTAStyles,
-      backgroundColor: "brandOrangeShy",
+      backgroundColor: "secondary",
     },
     tertiary: {
       ...commonCTAStyles,
@@ -252,9 +262,9 @@ export const theme = createTheme({
     },
     outline: {
       ...commonCTAStyles,
-      backgroundColor: "white100",
+      backgroundColor: "white",
       borderWidth: 1,
-      borderColor: "black20",
+      borderColor: "black",
     },
     disabled: {
       ...commonCTAStyles,
@@ -267,13 +277,13 @@ export const theme = createTheme({
     ghost: {
       ...commonCTAStyles,
       backgroundColor: "transparent",
-      color: "brandOrange",
+      color: "brandGreen",
       borderWidth: 0,
     },
     destructive: {
       ...commonCTAStyles,
       backgroundColor: "feedbackRed",
-      color: "white100",
+      color: "white",
     },
     inactive: {
       ...commonCTAStyles,
@@ -290,9 +300,9 @@ export const theme = createTheme({
     },
     active: {
       ...commonInputStyles,
-      backgroundColor: "white100",
+      backgroundColor: "white",
       borderWidth: 2,
-      borderColor: "brandOrange",
+      borderColor: "brandGreen",
     },
     invalid: {
       ...commonInputStyles,
@@ -302,14 +312,14 @@ export const theme = createTheme({
     },
     disabled: {
       ...commonInputStyles,
-      backgroundColor: "white100",
+      backgroundColor: "white",
       borderWidth: 1,
       borderColor: "black15",
       color: "black90",
     },
     verify: {
       ...commonInputStyles,
-      backgroundColor: "white100",
+      backgroundColor: "white",
       borderWidth: 1,
       borderColor: "black15",
     },
@@ -321,8 +331,13 @@ export type Theme = typeof theme;
 export const darkTheme: Theme = {
   ...theme,
   colors: {
-    brandGree: palette.greenPrimary,
+    brandGreen: palette.greenPrimary,
     white: palette.white,
+    secondary: palette.secondaryGreen,
     transparent: palette.transparent,
+    black: palette.black,
+
+    grey1: palette.grey1,
+    grey2: palette.grey2,
   },
 };

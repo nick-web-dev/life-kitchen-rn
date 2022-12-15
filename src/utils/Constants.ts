@@ -1,5 +1,6 @@
 export const SCREENS = {
-  Login: "Login",
+  LoginScreen1: "LoginScreen1",
+  LoginScreen2: "LoginScreen2",
   MainScreen: "mainScreen",
 };
 

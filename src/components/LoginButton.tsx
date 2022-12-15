@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import RNText from "./Text";
 
 interface Props {
   onPress: any;
@@ -20,9 +19,7 @@ const LoginButton = ({ onPress, clickable, btnStyles, label }: Props) => {
           ? { backgroundColor: "#0080FE" }
           : { backgroundColor: "#D4D6FA" },
       ]}
-    >
-      <RNText style={styles.textStyle} label={label} />
-    </TouchableOpacity>
+    ></TouchableOpacity>
   );
 };
 

@@ -7,7 +7,8 @@ import {
 import { Appearance } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../utils/Constants";
-import LoginScreen from "../screens/login";
+import LoginScreen1 from "../screens/auth/loginScreen1";
+import LoginScreen2 from "../screens/auth/loginScreen2";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -18,7 +19,14 @@ const UnAuthenticatedStack = () => {
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-        <AuthStack.Screen name={SCREENS.Login} component={LoginScreen} />
+        <AuthStack.Screen
+          name={SCREENS.LoginScreen1}
+          component={LoginScreen1}
+        />
+        <AuthStack.Screen
+          name={SCREENS.LoginScreen2}
+          component={LoginScreen2}
+        />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

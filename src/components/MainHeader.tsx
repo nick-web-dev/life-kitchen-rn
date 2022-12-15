@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import RNText from "./Text";
 import CarSVg from "../assets/images/cart2.svg";
 
 interface props {
@@ -14,7 +13,6 @@ const MainHeader = ({ headerLable }: props) => {
         style={styles.logoStyle}
         source={require('../assets/images/logo.png')}
       /> */}
-      <RNText style={styles.starTextStyle} label={headerLable} />
       {/* <CarSVg width={30} height={30} /> */}
     </View>
   );

@@ -12,7 +12,7 @@ const Navigation = () => {
 
   return (
     <ThemeProvider theme={colorScheme === "dark" ? darkTheme : theme}>
-      {true ? <AuthenticatedStack /> : <UnAuthenticatedStack />}
+      {false ? <AuthenticatedStack /> : <UnAuthenticatedStack />}
     </ThemeProvider>
   );
 };

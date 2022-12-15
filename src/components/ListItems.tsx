@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import LoginButton from "./LoginButton";
-import RNText from "./Text";
 
 interface props {
   item: any;
@@ -14,36 +13,10 @@ const ListItems = ({ item, addToCart }: props) => {
   };
 
   const StarComp = () => {
-    return (
-      <View style={styles.starView}>
-        <RNText style={styles.starTextStyle} label={item?.rate} />
-      </View>
-    );
+    return <View style={styles.starView}></View>;
   };
 
-  return (
-    <View style={styles.tileView}>
-      <Image
-        style={styles.imageStyle}
-        source={{
-          uri: "https://reactnative.dev/img/tiny_logo.png",
-        }}
-        source={{ uri: item?.photos.length > 0 ? item?.photos[0] : null }}
-      />
-      <RNText style={styles.textStyle} label={item?.name} />
-      <StarComp />
-      <HorizontalLine />
-      <View style={styles.CartView}>
-        <RNText style={styles.starTextStyle} label={"$" + item?.price} />
-        <LoginButton
-          label="ADD TO CART"
-          clickable={true}
-          onPress={() => addToCart(item)}
-          btnStyles={styles.selectBtn}
-        />
-      </View>
-    </View>
-  );
+  return <View style={styles.tileView}></View>;
 };
 
 export default ListItems;
