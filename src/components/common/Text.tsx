@@ -34,7 +34,7 @@ const Text: React.FC<TextProps> = forwardRef(function Text(
       case "medium":
         return "Helvetica";
       default:
-        return "Helvetca-Bold";
+        return "Helvetica";
     }
   }, [weight]);
 

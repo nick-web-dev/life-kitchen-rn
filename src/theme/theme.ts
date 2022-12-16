@@ -9,6 +9,8 @@ const palette = {
 
   grey1: "#2C2C2C",
   grey2: "rgba(255, 255, 255, 0.5)",
+  grey3: "#C8C8C8",
+  grey4: "#777777",
 };
 
 const commonFontStyles = {
@@ -18,7 +20,7 @@ const commonFontStyles = {
 const commonInputStyles = {
   textAlign: "left",
   borderRadius: "input",
-  color: "black90",
+  color: "black",
   paddingHorizontal: "xs",
 };
 
@@ -36,6 +38,8 @@ export const theme = createTheme({
 
     grey1: palette.grey1,
     grey2: palette.grey2,
+    grey3: palette.grey3,
+    grey4: palette.grey4,
   },
   spacing: {
     "0": 0,
@@ -258,7 +262,7 @@ export const theme = createTheme({
     },
     tertiary: {
       ...commonCTAStyles,
-      backgroundColor: "black90",
+      backgroundColor: "black",
     },
     outline: {
       ...commonCTAStyles,
@@ -268,11 +272,11 @@ export const theme = createTheme({
     },
     disabled: {
       ...commonCTAStyles,
-      backgroundColor: "background",
+      backgroundColor: "grey2",
     },
     disabledDark: {
       ...commonCTAStyles,
-      backgroundColor: "black10",
+      backgroundColor: "black",
     },
     ghost: {
       ...commonCTAStyles,
@@ -296,7 +300,7 @@ export const theme = createTheme({
   inputVariants: {
     default: {
       ...commonInputStyles,
-      backgroundColor: "background",
+      backgroundColor: "grey2",
     },
     active: {
       ...commonInputStyles,
@@ -306,7 +310,7 @@ export const theme = createTheme({
     },
     invalid: {
       ...commonInputStyles,
-      backgroundColor: "feedbackRedShy",
+      backgroundColor: "grey2",
       borderWidth: 2,
       borderColor: "feedbackRed",
     },
@@ -315,7 +319,7 @@ export const theme = createTheme({
       backgroundColor: "white",
       borderWidth: 1,
       borderColor: "black15",
-      color: "black90",
+      color: "black",
     },
     verify: {
       ...commonInputStyles,
@@ -339,5 +343,7 @@ export const darkTheme: Theme = {
 
     grey1: palette.grey1,
     grey2: palette.grey2,
+    grey3: palette.grey3,
+    grey4: palette.grey4,
   },
 };

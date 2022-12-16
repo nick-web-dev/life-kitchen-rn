@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../utils/Constants";
 import LoginScreen1 from "../screens/auth/loginScreen1";
 import LoginScreen2 from "../screens/auth/loginScreen2";
+import Register from "../screens/auth/register";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const UnAuthenticatedStack = () => {
           name={SCREENS.LoginScreen2}
           component={LoginScreen2}
         />
+        <AuthStack.Screen name={SCREENS.RegisterScreen} component={Register} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

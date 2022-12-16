@@ -6,7 +6,7 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-import LoginImage from "../../../assets/svg/loginImage.svg";
+import LoginSvg from "../../../assets/svg/loginSvg.svg";
 import Box from "../../../components/common/Box";
 import CTA from "../../../components/common/CTA";
 import CTAWithDynamicIcon from "../../../components/common/CTAWithDynamicIcon";
@@ -16,6 +16,7 @@ import GoogleIcon from "../../../assets/svg/googleIcon.svg";
 import { SvgXml } from "react-native-svg";
 import { iPhoneIcon } from "../../../assets/svg";
 import { SCREENS } from "../../../utils/Constants";
+import CTAText from "../../../components/common/CTAText";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -25,9 +26,9 @@ const LoginScreen1 = ({ navigation }: any) => {
     <SafeAreaView style={styles.mainView}>
       <StatusBar translucent backgroundColor="transparent" />
       <Box>
-        <LoginImage
+        <LoginSvg
           width={windowWidth}
-          height={Platform.OS === "android" ? windowHeight / 2 : 666}
+          height={Platform.OS === "android" ? windowWidth / 2 : 666}
         />
       </Box>
       <Box paddingHorizontal={"40"} flex={1} backgroundColor={"black"}>
@@ -120,15 +121,15 @@ const LoginScreen1 = ({ navigation }: any) => {
           >
             Don’t have an account?
           </Text>
-          <Text
+          <CTAText
             lineHeight={23}
             numberOfLines={1}
             fontSize={20}
             color={"brandGreen"}
             fontWeight={"400"}
-          >
-            {` Sign up`}
-          </Text>
+            label={` Sign up`}
+            onPress={() => navigation.navigate(SCREENS.RegisterScreen)}
+          />
         </Box>
       </Box>
     </SafeAreaView>
