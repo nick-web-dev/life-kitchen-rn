@@ -28,7 +28,7 @@ const LoginScreen1 = ({ navigation }: any) => {
       <Box>
         <LoginSvg
           width={windowWidth}
-          height={Platform.OS === "android" ? windowWidth / 2 : 666}
+          height={Platform.OS === "android" ? windowHeight / 2 : 666}
         />
       </Box>
       <Box paddingHorizontal={"40"} flex={1} backgroundColor={"black"}>

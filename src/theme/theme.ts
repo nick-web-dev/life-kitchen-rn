@@ -235,6 +235,7 @@ export const theme = createTheme({
     input: 10,
     noRounded: 0,
     "73": 73,
+    "50": 50,
     "40": 40,
     "10": 10,
     "35": 35,

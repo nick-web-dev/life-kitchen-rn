@@ -17,6 +17,7 @@ import { FormField } from "../../../components/common/FormField";
 import Text from "../../../components/common/Text";
 import { RegisterFormValues } from "../../../context/types";
 import { AppConstData } from "../../../utils/app-data";
+import { SCREENS } from "../../../utils/Constants";
 import { AppValidation } from "../../../utils/validation";
 
 let initialValues: RegisterFormValues = {
@@ -30,6 +31,7 @@ const Register = ({ navigation }: any) => {
   let refValues = AppConstData.registerRef.map(() => useRef<any>());
 
   const handleSubmit = (data: any) => {
+    navigation.navigate(SCREENS.UserProfile);
     console.log("register data: ", data);
   };
 
@@ -81,7 +83,7 @@ const Register = ({ navigation }: any) => {
               <Form
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                validationSchema={AppValidation.validationSchemaRegister()}
+                // validationSchema={AppValidation.validationSchemaRegister()}
               >
                 <FormField
                   ref={refValues[0]}

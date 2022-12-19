@@ -3,6 +3,8 @@ export const SCREENS = {
   LoginScreen2: "LoginScreen2",
   MainScreen: "mainScreen",
   RegisterScreen: "register",
+  UserProfile: "userProfile",
+  UserProfileFlow: "UserProfileFlow",
 };
 
 export const reactQueryKeys = {
