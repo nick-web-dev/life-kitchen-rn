@@ -23,7 +23,7 @@ const UserProfile = ({ navigation }: any) => {
         backgroundColor="transparent"
       />
       <Box marginTop={"20"} paddingHorizontal={"20"} flex={1}>
-        <Box flex={0.2}>
+        <Box marginTop={"20"}>
           <CTAWithDynamicIcon
             borderRadius={"cta"}
             justifyContent={"center"}
@@ -40,11 +40,11 @@ const UserProfile = ({ navigation }: any) => {
           <Text
             lineHeight={80.49}
             numberOfLines={2}
-            fontSize={70}
+            fontSize={60}
             color={"white"}
             fontWeight={"400"}
             paddingHorizontal={"20"}
-            marginTop={"20"}
+            marginTop={"10"}
           >
             Welcome to LifeKitchen
           </Text>
@@ -55,13 +55,12 @@ const UserProfile = ({ navigation }: any) => {
             color={"white"}
             fontWeight={"400"}
             paddingHorizontal={"20"}
-            marginVertical={"10"}
           >
             Let’s get you set up and ready to use your LifeKitchen. This will
             take roughly 15 minutes.
           </Text>
         </Box>
-        <Box flex={0.75} paddingHorizontal={"20"} justifyContent={"center"}>
+        <Box flex={1} marginHorizontal={"20"} justifyContent={"center"}>
           <WelcomeTile
             icon={profileIcon}
             label={"Create individual and family profiles"}
@@ -97,7 +96,9 @@ const UserProfile = ({ navigation }: any) => {
           variant="primary"
           color={"white"}
           lineHeight={23}
-          onPress={() => navigation.navigate(SCREENS.UserProfileFlow)}
+          onPress={() => navigation.navigate(SCREENS.FamilySize)}
+          marginBottom={"20"}
+          marginHorizontal={"20"}
         >
           Get Started
         </CTA>

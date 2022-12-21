@@ -5,6 +5,8 @@ export const SCREENS = {
   RegisterScreen: "register",
   UserProfile: "userProfile",
   UserProfileFlow: "UserProfileFlow",
+  ProfileCreation: "profileCreation",
+  FamilySize: "familySize",
 };
 
 export const reactQueryKeys = {

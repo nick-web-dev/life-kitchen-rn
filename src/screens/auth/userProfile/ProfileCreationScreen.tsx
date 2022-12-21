@@ -1,9 +1,8 @@
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
-import CookingSkill from "../../../components/CookingSkill";
-import NutritionGoals from "../../../components/NutritionGoals";
+import ProfileCreation from "../../../components/ProfileCreation";
 
-const UserProfileFLow = ({ navigation }: any) => {
+const ProfileCreationScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.mainView}>
       <StatusBar
@@ -11,8 +10,7 @@ const UserProfileFLow = ({ navigation }: any) => {
         translucent
         backgroundColor="transparent"
       />
-      <CookingSkill navigation={navigation} />
-      {/* <NutritionGoals navigation={navigation} /> */}
+      <ProfileCreation navigation={navigation} />
     </SafeAreaView>
   );
 };
@@ -29,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfileFLow;
+export default ProfileCreationScreen;

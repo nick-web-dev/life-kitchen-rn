@@ -12,6 +12,8 @@ import LoginScreen2 from "../screens/auth/loginScreen2";
 import Register from "../screens/auth/register";
 import UserProfile from "../screens/auth/userProfile";
 import UserProfileFLow from "../screens/auth/userProfile/userProfileFlow";
+import ProfileCreationScreen from "../screens/auth/userProfile/ProfileCreationScreen";
+import FamilySizeScreen from "../screens/auth/userProfile/FamilySizeScreen";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -31,6 +33,14 @@ const UnAuthenticatedStack = () => {
           component={LoginScreen2}
         />
         <AuthStack.Screen name={SCREENS.RegisterScreen} component={Register} />
+        <AuthStack.Screen
+          name={SCREENS.ProfileCreation}
+          component={ProfileCreationScreen}
+        />
+        <AuthStack.Screen
+          name={SCREENS.FamilySize}
+          component={FamilySizeScreen}
+        />
         <AuthStack.Screen name={SCREENS.UserProfile} component={UserProfile} />
         <AuthStack.Screen
           name={SCREENS.UserProfileFlow}

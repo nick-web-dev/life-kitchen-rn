@@ -111,7 +111,7 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
         <Text
           lineHeight={80.49}
           numberOfLines={2}
-          fontSize={70}
+          fontSize={60}
           color={"white"}
           fontWeight={"400"}
           paddingHorizontal={"20"}
@@ -177,7 +177,7 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
         variant="primary"
         color={"white"}
         lineHeight={23}
-        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
+        onPress={() => navigation.navigate(SCREENS.UserProfileFlow)}
       >
         Next
       </CTA>

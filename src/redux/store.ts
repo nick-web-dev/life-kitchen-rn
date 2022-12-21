@@ -1,18 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistReducer, persistStore } from 'redux-persist';
-import userSlice from './slices/UserSlice';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistReducer, persistStore } from "redux-persist";
+import userSlice from "./slices/UserSlice";
+import userProfileSlice from "./slices/UserProfile";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const persistConfig = {
-  key: 'reducer',
+  key: "reducer",
   storage: AsyncStorage,
-  whitelist: ['user'],
+  whitelist: ["user", "userProfile"],
 };
 
 const reducers = combineReducers({
   user: userSlice,
+  userProfile: userProfileSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -21,7 +23,7 @@ export const store = configureStore({
   reducer: {
     reducer: persistedReducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,

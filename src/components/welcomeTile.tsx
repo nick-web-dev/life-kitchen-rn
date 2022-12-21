@@ -25,7 +25,7 @@ const WelcomeTile = ({ label, icon }: Props) => {
       <Text
         lineHeight={27.6}
         numberOfLines={1}
-        fontSize={24}
+        fontSize={22}
         color={"white"}
         fontWeight={"400"}
         paddingHorizontal={"20"}

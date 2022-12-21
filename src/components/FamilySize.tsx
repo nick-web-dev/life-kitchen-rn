@@ -46,7 +46,7 @@ const FamilySize: React.FC<InputTextProps> = (props) => {
         <Text
           lineHeight={80.49}
           numberOfLines={2}
-          fontSize={70}
+          fontSize={60}
           color={"white"}
           fontWeight={"400"}
           paddingHorizontal={"20"}
@@ -102,7 +102,7 @@ const FamilySize: React.FC<InputTextProps> = (props) => {
         variant="primary"
         color={"white"}
         lineHeight={23}
-        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
+        onPress={() => navigation.navigate(SCREENS.ProfileCreation)}
       >
         Next
       </CTA>

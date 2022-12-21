@@ -25,13 +25,15 @@ const LoginScreen1 = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.mainView}>
       <StatusBar translucent backgroundColor="transparent" />
-      <Box>
-        <LoginSvg
-          width={windowWidth}
-          height={Platform.OS === "android" ? windowHeight / 2 : 666}
-        />
+      <Box
+        flex={0.6}
+        alignItems={"center"}
+        backgroundColor={"brandGreen"}
+        justifyContent={"center"}
+      >
+        <LoginSvg width={windowWidth} height={windowHeight} />
       </Box>
-      <Box paddingHorizontal={"40"} flex={1} backgroundColor={"black"}>
+      <Box padding={"40"} flex={0.45} backgroundColor={"black"}>
         <Text
           lineHeight={46}
           fontSize={40}
@@ -44,7 +46,7 @@ const LoginScreen1 = ({ navigation }: any) => {
         <Text
           lineHeight={80}
           numberOfLines={2}
-          fontSize={70}
+          fontSize={Platform.OS === "android" ? 65 : 70}
           color={"white"}
           fontWeight={"400"}
           marginBottom={"30"}
