@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FlatList, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
@@ -6,7 +6,6 @@ import { SCREENS } from "../utils/Constants";
 import Box from "./common/Box";
 import CTA from "./common/CTA";
 import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
-import CheckBox from "@react-native-community/checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProfile } from "../redux/slices/UserProfile";
 import Text from "./common/Text";
@@ -15,49 +14,87 @@ interface InputTextProps {
   navigation?: any;
 }
 
+const data = [
+  {
+    id: 1,
+    title: "Gluten-free (coeliac)",
+    checkBox: false,
+  },
+  {
+    id: 2,
+    title: "Gluten-free (intolerance)",
+    checkBox: false,
+  },
+  {
+    id: 3,
+    title: "Halal",
+    checkBox: false,
+  },
+  {
+    id: 4,
+    title: "Kosher",
+    checkBox: false,
+  },
+  {
+    id: 5,
+    title: "Dairy and lactose free",
+    checkBox: false,
+  },
+  {
+    id: 6,
+    title: "Fish/shellfish allergy",
+    checkBox: false,
+  },
+];
+
 const limit = 1;
 
-const CookingSkill: React.FC<InputTextProps> = (props) => {
+const DietaryRequirements: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
+  const [checkData, setCheckData] = useState(data);
   const [totalSelected, setTotalSelected] = useState(0);
   const { userProfile } = useSelector((state) => state?.reducer);
   const [profileData, setProfileData] = useState(userProfile.userProfile);
-  const [cookingProfile, setCookingProfile] = useState(
-    userProfile.userProfile[0]?.cookingSkill
+  const [dietaryData, setDietaryData] = useState(
+    userProfile.userProfile[3]?.dietaryRequirements
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (userProfile.userProfile) {
-      setProfileData(userProfile.userProfile);
-      setCookingProfile(userProfile.userProfile[0]?.cookingSkill);
-    }
-  }, [userProfile]);
-
   const checkValueChanges = (item) => {
-    let newArray = cookingProfile.map((element) => {
+    let newArray = checkData.map((element) => {
       if (item?.id === element?.id) {
-        if (!element?.checkBox === true) setTotalSelected(1);
-        else setTotalSelected(0);
-        return {
-          ...element,
-          checkBox: !element?.checkBox,
-        };
+        if (!item?.checkBox === false) setTotalSelected(totalSelected - 1);
+        if (!item?.checkBox === true && totalSelected >= checkData.length) {
+          return item;
+        } else {
+          if (!item?.checkBox === true) setTotalSelected(totalSelected + 1);
+          return {
+            ...element,
+            checkBox: !item?.checkBox,
+          };
+        }
       } else {
-        return {
-          ...element,
-          checkBox: false,
-        };
+        return element;
       }
     });
+    setCheckData(newArray);
+  };
+
+  const moveBackToComponent = () => {
     let newProfile = profileData.map((item) => {
-      if (item.screenNumber === 1) {
+      if (item.screenNumber === 2) {
         return {
           ...item,
-          cookingSkill: newArray,
+          displayScreen: true,
+        };
+      } else if (item.screenNumber === 3) {
+        return {
+          ...item,
+          displayScreen: false,
         };
       } else return item;
     });
+
     dispatch(setUserProfile(newProfile));
   };
 
@@ -83,24 +120,6 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
     );
   };
 
-  const moveToNextComponent = () => {
-    let newProfile = profileData.map((item) => {
-      if (item.screenNumber === 1) {
-        return {
-          ...item,
-          displayScreen: false,
-        };
-      } else if (item.screenNumber === 2) {
-        return {
-          ...item,
-          displayScreen: true,
-        };
-      } else return item;
-    });
-
-    dispatch(setUserProfile(newProfile));
-  };
-
   return (
     <Box marginTop={"20"} paddingHorizontal={"20"} flex={1}>
       <Box>
@@ -120,7 +139,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
             withIcon
             onlyIcon
             icon={() => <SvgXml height={17} width={17} xml={backArrow} />}
-            onPress={() => navigation.goBack()}
+            onPress={() => moveBackToComponent()}
           />
           <Text
             lineHeight={34.5}
@@ -130,7 +149,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
             fontWeight={"400"}
             alignSelf={"center"}
           >
-            1 of 5
+            3 of 5
           </Text>
           <Box width={50} />
         </Box>
@@ -142,7 +161,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
           fontWeight={"400"}
           paddingHorizontal={"20"}
         >
-          What is your cooking skill level?
+          Do you have any dietary requirements?
         </Text>
         <Text
           lineHeight={23}
@@ -152,12 +171,12 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
           fontWeight={"400"}
           paddingHorizontal={"20"}
         >
-          This helps me recommend the right recipes to match your skill level
+          Select all that apply. I’ll make sure to work within your needs.
         </Text>
       </Box>
       <Box flex={1} padding={"10"} paddingTop={"30"}>
         <FlatList
-          data={cookingProfile}
+          data={checkData}
           renderItem={({ item }: any) => <CheckTile item={item} />}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={({ item }: any) => (
@@ -174,7 +193,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
         paddingHorizontal={"20"}
         marginBottom={"10"}
       >
-        {totalSelected} of {limit} Selected
+        {totalSelected} Selected
       </Text>
       <CTA
         marginHorizontal={"20"}
@@ -186,7 +205,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
         color={"white"}
         lineHeight={23}
         marginBottom={"20"}
-        onPress={() => moveToNextComponent()}
+        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
       >
         Next
       </CTA>
@@ -211,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CookingSkill;
+export default DietaryRequirements;

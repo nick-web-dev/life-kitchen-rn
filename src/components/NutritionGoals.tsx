@@ -1,62 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
-import { SCREENS } from "../utils/Constants";
 import Box from "./common/Box";
 import CTA from "./common/CTA";
 import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
-import CheckBox from "@react-native-community/checkbox";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserProfile } from "../redux/slices/UserProfile";
 import Text from "./common/Text";
 
 interface InputTextProps {
   navigation?: any;
 }
 
-const data = [
-  {
-    id: 1,
-    title: "Lose weight",
-    checkBox: false,
-  },
-  {
-    id: 2,
-    title: "Gain weight",
-    checkBox: false,
-  },
-  {
-    id: 3,
-    title: "Maintain my current weight",
-    checkBox: false,
-  },
-  {
-    id: 4,
-    title: "Increase lean muscle mass",
-    checkBox: false,
-  },
-  {
-    id: 5,
-    title: "Eat healthier",
-    checkBox: false,
-  },
-  {
-    id: 6,
-    title: "Reduce red meat intake",
-    checkBox: false,
-  },
-];
-
 const limit = 3;
 
 const NutritionGoals: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
-  const [checkData, setCheckData] = useState(data);
-  const [totalSelected, setTotalSelected] = useState(0);
+  const { userProfile } = useSelector((state) => state?.reducer);
+  const [profileData, setProfileData] = useState(userProfile.userProfile);
+  const [nutritionData, setNutritionData] = useState(
+    userProfile.userProfile[1]?.nutritionGoal
+  );
+  const dispatch = useDispatch();
+
+  const checkTotalCount = () => {
+    let count = 0;
+    nutritionData.forEach((element) => {
+      if (element?.checkBox) count++;
+    });
+    return count;
+  };
+
+  const [totalSelected, setTotalSelected] = useState(checkTotalCount());
+
+  useEffect(() => {
+    if (userProfile.userProfile) {
+      setProfileData(userProfile.userProfile);
+      setNutritionData(userProfile.userProfile[1]?.nutritionGoal);
+      setTotalSelected(checkTotalCount());
+    }
+  }, [userProfile]);
 
   const checkValueChanges = (item) => {
-    let newArray = checkData.map((element) => {
+    let newArray = nutritionData.map((element) => {
       if (item?.id === element?.id) {
-        if (!item?.checkBox === false) setTotalSelected(totalSelected - 1);
+        if (!item?.checkBox === false && totalSelected > 0)
+          setTotalSelected(totalSelected - 1);
         if (!item?.checkBox === true && totalSelected >= limit) {
           return item;
         } else {
@@ -70,7 +60,15 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
         return element;
       }
     });
-    setCheckData(newArray);
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 2) {
+        return {
+          ...item,
+          nutritionGoal: newArray,
+        };
+      } else return item;
+    });
+    dispatch(setUserProfile(newProfile));
   };
 
   const CheckTile = ({ item }: any) => {
@@ -82,30 +80,53 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
         }}
         style={styles.btnStyle}
       >
-        <CheckBox
-          tintColors={{ true: "#1ABE73", false: "#ffffff" }}
-          disabled={false}
-          boxType={"square"}
-          value={item?.checkBox}
-          onValueChange={(newValue) => {
-            checkValueChanges(item);
-          }}
-          tintColor={"#ffffff"}
-          onCheckColor={"#1ABE73"}
-          onTintColor={"#1ABE73"}
-        />
         <Text
           lineHeight={34.5}
           numberOfLines={2}
           fontSize={30}
           color={item?.checkBox ? "brandGreen" : "white"}
           fontWeight={"400"}
-          paddingLeft={"20"}
         >
           {item?.title}
         </Text>
       </TouchableOpacity>
     );
+  };
+
+  const moveToNextComponent = () => {
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 2) {
+        return {
+          ...item,
+          displayScreen: false,
+        };
+      } else if (item.screenNumber === 3) {
+        return {
+          ...item,
+          displayScreen: true,
+        };
+      } else return item;
+    });
+
+    dispatch(setUserProfile(newProfile));
+  };
+
+  const moveBackToComponent = () => {
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 1) {
+        return {
+          ...item,
+          displayScreen: true,
+        };
+      } else if (item.screenNumber === 2) {
+        return {
+          ...item,
+          displayScreen: false,
+        };
+      } else return item;
+    });
+
+    dispatch(setUserProfile(newProfile));
   };
 
   return (
@@ -127,7 +148,7 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
             withIcon
             onlyIcon
             icon={() => <SvgXml height={17} width={17} xml={backArrow} />}
-            onPress={() => navigation.goBack()}
+            onPress={() => moveBackToComponent()}
           />
           <Text
             lineHeight={34.5}
@@ -165,11 +186,11 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
       </Box>
       <Box flex={1} padding={"10"} paddingTop={"30"}>
         <FlatList
-          data={checkData}
+          data={nutritionData}
           renderItem={({ item }: any) => <CheckTile item={item} />}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={({ item }: any) => (
-            <Box paddingVertical={Platform.OS === "android" ? "20" : "35"} />
+            <Box paddingVertical={Platform.OS === "android" ? "10" : "20"} />
           )}
         />
       </Box>
@@ -194,7 +215,7 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
         color={"white"}
         lineHeight={23}
         marginBottom={"20"}
-        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
+        onPress={() => moveToNextComponent()}
       >
         Next
       </CTA>

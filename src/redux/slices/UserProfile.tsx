@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserProfile } from "../../utils/Constants";
+
+console.log("UserProfile: ", UserProfile);
 
 interface State {
   userProfile: any;
 }
 
 const initialState: State = {
-  userProfile: null,
+  userProfile: UserProfile,
 };
-
-export const userReducer = createSlice({
+console.log("initialState: ", initialState);
+export const profileReducer = createSlice({
   name: "userProfile",
   initialState,
   reducers: {
@@ -18,6 +21,6 @@ export const userReducer = createSlice({
   },
 });
 
-export const { setUserProfile } = userReducer.actions;
+export const { setUserProfile } = profileReducer.actions;
 
-export default userReducer.reducer;
+export default profileReducer.reducer;

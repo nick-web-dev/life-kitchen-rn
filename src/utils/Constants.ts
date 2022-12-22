@@ -12,3 +12,181 @@ export const SCREENS = {
 export const reactQueryKeys = {
   product: "product",
 };
+
+export const UserProfile = [
+  {
+    screenNumber: 1,
+    displayScreen: true,
+    cookingSkill: [
+      {
+        id: 1,
+        title: "Novice: I’m not the best chef",
+        checkBox: false,
+      },
+      {
+        id: 2,
+        title: "Beginner: I have some basic skills",
+        checkBox: false,
+      },
+      {
+        id: 3,
+        title: "Intermediate: I’m pretty experienced",
+        checkBox: false,
+      },
+      {
+        id: 4,
+        title: "Expert: I’m a good chef",
+        checkBox: false,
+      },
+      {
+        id: 5,
+        title: "World class: I’m a professional chef",
+        checkBox: false,
+      },
+    ],
+  },
+  {
+    screenNumber: 2,
+    displayScreen: false,
+    nutritionGoal: [
+      {
+        id: 1,
+        title: "Lose weight",
+        checkBox: false,
+      },
+      {
+        id: 2,
+        title: "Gain weight",
+        checkBox: false,
+      },
+      {
+        id: 3,
+        title: "Maintain my current weight",
+        checkBox: false,
+      },
+      {
+        id: 4,
+        title: "Increase lean muscle mass",
+        checkBox: false,
+      },
+      {
+        id: 5,
+        title: "Eat healthier",
+        checkBox: false,
+      },
+      {
+        id: 6,
+        title: "Reduce red meat intake",
+        checkBox: false,
+      },
+    ],
+  },
+  {
+    screenNumber: 3,
+    displayScreen: false,
+    dietaryRequirements: [
+      {
+        id: 1,
+        title: "Gluten-free (coeliac)",
+        checkBox: false,
+      },
+      {
+        id: 2,
+        title: "Gluten-free (intolerance)",
+        checkBox: false,
+      },
+      {
+        id: 3,
+        title: "Halal",
+        checkBox: false,
+      },
+      {
+        id: 4,
+        title: "Kosher",
+        checkBox: false,
+      },
+      {
+        id: 5,
+        title: "Dairy and lactose free",
+        checkBox: false,
+      },
+      {
+        id: 6,
+        title: "Fish/shellfish allergy",
+        checkBox: false,
+      },
+    ],
+  },
+  {
+    screenNumber: 4,
+    displayScreen: false,
+    currentDiets: [
+      {
+        id: 1,
+        title: "Low carb",
+        checkBox: false,
+      },
+      {
+        id: 2,
+        title: "Low carb, high protein",
+        checkBox: false,
+      },
+      {
+        id: 3,
+        title: "Keto",
+        checkBox: false,
+      },
+      {
+        id: 4,
+        title: "Paleo",
+        checkBox: false,
+      },
+      {
+        id: 5,
+        title: "Low fat",
+        checkBox: false,
+      },
+      {
+        id: 6,
+        title: "Atkins",
+        checkBox: false,
+      },
+    ],
+  },
+  {
+    screenNumber: 5,
+    displayScreen: false,
+    dietaryRequirements: [
+      {
+        id: 1,
+        title: "Overweight/obese",
+        checkBox: false,
+      },
+      {
+        id: 2,
+        title: "High blood pressure",
+        checkBox: false,
+      },
+      {
+        id: 3,
+        title: "Gout",
+        checkBox: false,
+      },
+      {
+        id: 4,
+        title: "Type 2 diabetes",
+        checkBox: false,
+      },
+      {
+        id: 5,
+        title: "Heart disease",
+        checkBox: false,
+      },
+      {
+        id: 6,
+        title: "Cancer",
+        checkBox: false,
+      },
+    ],
+  },
+];

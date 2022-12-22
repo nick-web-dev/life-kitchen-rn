@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FlatList, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
@@ -6,59 +6,70 @@ import { SCREENS } from "../utils/Constants";
 import Box from "./common/Box";
 import CTA from "./common/CTA";
 import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
-import CheckBox from "@react-native-community/checkbox";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserProfile } from "../redux/slices/UserProfile";
 import Text from "./common/Text";
 
 interface InputTextProps {
   navigation?: any;
 }
 
+const data = [
+  {
+    id: 1,
+    title: "Low carb",
+    checkBox: false,
+  },
+  {
+    id: 2,
+    title: "Low carb, high protein",
+    checkBox: false,
+  },
+  {
+    id: 3,
+    title: "Keto",
+    checkBox: false,
+  },
+  {
+    id: 4,
+    title: "Paleo",
+    checkBox: false,
+  },
+  {
+    id: 5,
+    title: "Low fat",
+    checkBox: false,
+  },
+  {
+    id: 6,
+    title: "Atkins",
+    checkBox: false,
+  },
+];
+
 const limit = 1;
 
-const CookingSkill: React.FC<InputTextProps> = (props) => {
+const CurrentDiets: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
+  const [checkData, setCheckData] = useState(data);
   const [totalSelected, setTotalSelected] = useState(0);
-  const { userProfile } = useSelector((state) => state?.reducer);
-  const [profileData, setProfileData] = useState(userProfile.userProfile);
-  const [cookingProfile, setCookingProfile] = useState(
-    userProfile.userProfile[0]?.cookingSkill
-  );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (userProfile.userProfile) {
-      setProfileData(userProfile.userProfile);
-      setCookingProfile(userProfile.userProfile[0]?.cookingSkill);
-    }
-  }, [userProfile]);
 
   const checkValueChanges = (item) => {
-    let newArray = cookingProfile.map((element) => {
+    let newArray = checkData.map((element) => {
       if (item?.id === element?.id) {
-        if (!element?.checkBox === true) setTotalSelected(1);
-        else setTotalSelected(0);
-        return {
-          ...element,
-          checkBox: !element?.checkBox,
-        };
+        if (!item?.checkBox === false) setTotalSelected(totalSelected - 1);
+        if (!item?.checkBox === true && totalSelected >= checkData.length) {
+          return item;
+        } else {
+          if (!item?.checkBox === true) setTotalSelected(totalSelected + 1);
+          return {
+            ...element,
+            checkBox: !item?.checkBox,
+          };
+        }
       } else {
-        return {
-          ...element,
-          checkBox: false,
-        };
+        return element;
       }
     });
-    let newProfile = profileData.map((item) => {
-      if (item.screenNumber === 1) {
-        return {
-          ...item,
-          cookingSkill: newArray,
-        };
-      } else return item;
-    });
-    dispatch(setUserProfile(newProfile));
+    setCheckData(newArray);
   };
 
   const CheckTile = ({ item }: any) => {
@@ -81,24 +92,6 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
         </Text>
       </TouchableOpacity>
     );
-  };
-
-  const moveToNextComponent = () => {
-    let newProfile = profileData.map((item) => {
-      if (item.screenNumber === 1) {
-        return {
-          ...item,
-          displayScreen: false,
-        };
-      } else if (item.screenNumber === 2) {
-        return {
-          ...item,
-          displayScreen: true,
-        };
-      } else return item;
-    });
-
-    dispatch(setUserProfile(newProfile));
   };
 
   return (
@@ -130,7 +123,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
             fontWeight={"400"}
             alignSelf={"center"}
           >
-            1 of 5
+            4 of 5
           </Text>
           <Box width={50} />
         </Box>
@@ -142,7 +135,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
           fontWeight={"400"}
           paddingHorizontal={"20"}
         >
-          What is your cooking skill level?
+          Are you following any current diets?
         </Text>
         <Text
           lineHeight={23}
@@ -152,12 +145,12 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
           fontWeight={"400"}
           paddingHorizontal={"20"}
         >
-          This helps me recommend the right recipes to match your skill level
+          I can craft recipes that fit with all popular diet regimes.
         </Text>
       </Box>
       <Box flex={1} padding={"10"} paddingTop={"30"}>
         <FlatList
-          data={cookingProfile}
+          data={checkData}
           renderItem={({ item }: any) => <CheckTile item={item} />}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={({ item }: any) => (
@@ -174,7 +167,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
         paddingHorizontal={"20"}
         marginBottom={"10"}
       >
-        {totalSelected} of {limit} Selected
+        {totalSelected} Selected
       </Text>
       <CTA
         marginHorizontal={"20"}
@@ -186,7 +179,7 @@ const CookingSkill: React.FC<InputTextProps> = (props) => {
         color={"white"}
         lineHeight={23}
         marginBottom={"20"}
-        onPress={() => moveToNextComponent()}
+        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
       >
         Next
       </CTA>
@@ -211,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CookingSkill;
+export default CurrentDiets;
