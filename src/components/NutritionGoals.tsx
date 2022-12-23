@@ -13,8 +13,6 @@ interface InputTextProps {
   navigation?: any;
 }
 
-const limit = 3;
-
 const NutritionGoals: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
   const { userProfile } = useSelector((state) => state?.reducer);
@@ -22,35 +20,36 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
   const [nutritionData, setNutritionData] = useState(
     userProfile.userProfile[1]?.nutritionGoal
   );
+  const [totalSelected, setTotalSelected] = useState(0);
+  const [limit, setLimit] = useState(0);
   const dispatch = useDispatch();
 
-  const checkTotalCount = () => {
-    let count = 0;
-    nutritionData.forEach((element) => {
-      if (element?.checkBox) count++;
-    });
-    return count;
-  };
-
-  const [totalSelected, setTotalSelected] = useState(checkTotalCount());
+  useEffect(() => {
+    setValues();
+  }, []);
 
   useEffect(() => {
+    setValues();
+  }, [userProfile]);
+
+  const setValues = () => {
     if (userProfile.userProfile) {
       setProfileData(userProfile.userProfile);
       setNutritionData(userProfile.userProfile[1]?.nutritionGoal);
-      setTotalSelected(checkTotalCount());
+      setTotalSelected(userProfile.userProfile[1]?.selectedItems);
+      setLimit(userProfile.userProfile[1]?.limit);
     }
-  }, [userProfile]);
+  };
 
   const checkValueChanges = (item) => {
+    let selectedCount = totalSelected;
     let newArray = nutritionData.map((element) => {
       if (item?.id === element?.id) {
-        if (!item?.checkBox === false && totalSelected > 0)
-          setTotalSelected(totalSelected - 1);
+        if (!item?.checkBox === false && selectedCount > 0) selectedCount--;
         if (!item?.checkBox === true && totalSelected >= limit) {
           return item;
         } else {
-          if (!item?.checkBox === true) setTotalSelected(totalSelected + 1);
+          if (!item?.checkBox === true) selectedCount++;
           return {
             ...element,
             checkBox: !item?.checkBox,
@@ -64,6 +63,7 @@ const NutritionGoals: React.FC<InputTextProps> = (props) => {
       if (item.screenNumber === 2) {
         return {
           ...item,
+          selectedItems: selectedCount,
           nutritionGoal: newArray,
         };
       } else return item;

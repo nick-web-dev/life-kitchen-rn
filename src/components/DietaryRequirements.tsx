@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
-import { SCREENS } from "../utils/Constants";
 import Box from "./common/Box";
 import CTA from "./common/CTA";
 import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
@@ -14,60 +13,48 @@ interface InputTextProps {
   navigation?: any;
 }
 
-const data = [
-  {
-    id: 1,
-    title: "Gluten-free (coeliac)",
-    checkBox: false,
-  },
-  {
-    id: 2,
-    title: "Gluten-free (intolerance)",
-    checkBox: false,
-  },
-  {
-    id: 3,
-    title: "Halal",
-    checkBox: false,
-  },
-  {
-    id: 4,
-    title: "Kosher",
-    checkBox: false,
-  },
-  {
-    id: 5,
-    title: "Dairy and lactose free",
-    checkBox: false,
-  },
-  {
-    id: 6,
-    title: "Fish/shellfish allergy",
-    checkBox: false,
-  },
-];
-
-const limit = 1;
-
 const DietaryRequirements: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
-  const [checkData, setCheckData] = useState(data);
-  const [totalSelected, setTotalSelected] = useState(0);
   const { userProfile } = useSelector((state) => state?.reducer);
   const [profileData, setProfileData] = useState(userProfile.userProfile);
   const [dietaryData, setDietaryData] = useState(
-    userProfile.userProfile[3]?.dietaryRequirements
+    userProfile.userProfile[2]?.dietaryRequirements
   );
+  const [totalSelected, setTotalSelected] = useState(0);
+  const [limit, setLimit] = useState(0);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (userProfile.userProfile) {
+    }
+  }, [userProfile]);
+
+  useEffect(() => {
+    setValues();
+  }, []);
+
+  useEffect(() => {
+    setValues();
+  }, [userProfile]);
+
+  const setValues = () => {
+    if (userProfile.userProfile) {
+      setProfileData(userProfile.userProfile);
+      setDietaryData(userProfile.userProfile[2]?.dietaryRequirements);
+      setTotalSelected(userProfile.userProfile[2]?.selectedItems);
+      setLimit(userProfile.userProfile[2]?.dietaryRequirements.length);
+    }
+  };
+
   const checkValueChanges = (item) => {
-    let newArray = checkData.map((element) => {
+    let selectedCount = totalSelected;
+    let newArray = dietaryData.map((element) => {
       if (item?.id === element?.id) {
-        if (!item?.checkBox === false) setTotalSelected(totalSelected - 1);
-        if (!item?.checkBox === true && totalSelected >= checkData.length) {
+        if (!item?.checkBox === false && selectedCount > 0) selectedCount--;
+        if (!item?.checkBox === true && totalSelected >= dietaryData.length) {
           return item;
         } else {
-          if (!item?.checkBox === true) setTotalSelected(totalSelected + 1);
+          if (!item?.checkBox === true) selectedCount++;
           return {
             ...element,
             checkBox: !item?.checkBox,
@@ -77,7 +64,16 @@ const DietaryRequirements: React.FC<InputTextProps> = (props) => {
         return element;
       }
     });
-    setCheckData(newArray);
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 3) {
+        return {
+          ...item,
+          selectedItems: selectedCount,
+          dietaryRequirements: newArray,
+        };
+      } else return item;
+    });
+    dispatch(setUserProfile(newProfile));
   };
 
   const moveBackToComponent = () => {
@@ -94,7 +90,23 @@ const DietaryRequirements: React.FC<InputTextProps> = (props) => {
         };
       } else return item;
     });
+    dispatch(setUserProfile(newProfile));
+  };
 
+  const moveToNextComponent = () => {
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 3) {
+        return {
+          ...item,
+          displayScreen: false,
+        };
+      } else if (item.screenNumber === 4) {
+        return {
+          ...item,
+          displayScreen: true,
+        };
+      } else return item;
+    });
     dispatch(setUserProfile(newProfile));
   };
 
@@ -176,7 +188,7 @@ const DietaryRequirements: React.FC<InputTextProps> = (props) => {
       </Box>
       <Box flex={1} padding={"10"} paddingTop={"30"}>
         <FlatList
-          data={checkData}
+          data={dietaryData}
           renderItem={({ item }: any) => <CheckTile item={item} />}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={({ item }: any) => (
@@ -205,7 +217,7 @@ const DietaryRequirements: React.FC<InputTextProps> = (props) => {
         color={"white"}
         lineHeight={23}
         marginBottom={"20"}
-        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
+        onPress={() => moveToNextComponent()}
       >
         Next
       </CTA>

@@ -84,7 +84,6 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
           width={400}
           placeholderTextColor={"#C8C8C8"}
           onChangeText={(val) => {
-            console.log("val", val);
             setAge(val);
           }}
         />

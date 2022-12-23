@@ -14,6 +14,7 @@ import UserProfile from "../screens/auth/userProfile";
 import UserProfileFLow from "../screens/auth/userProfile/userProfileFlow";
 import ProfileCreationScreen from "../screens/auth/userProfile/ProfileCreationScreen";
 import FamilySizeScreen from "../screens/auth/userProfile/FamilySizeScreen";
+import ProfileComplete from "../screens/auth/userProfile/ProfileComplete";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -45,6 +46,10 @@ const UnAuthenticatedStack = () => {
         <AuthStack.Screen
           name={SCREENS.UserProfileFlow}
           component={UserProfileFLow}
+        />
+        <AuthStack.Screen
+          name={SCREENS.ProfileComplete}
+          component={ProfileComplete}
         />
       </AuthStack.Navigator>
     </NavigationContainer>

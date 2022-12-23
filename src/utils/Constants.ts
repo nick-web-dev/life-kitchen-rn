@@ -7,6 +7,7 @@ export const SCREENS = {
   UserProfileFlow: "UserProfileFlow",
   ProfileCreation: "profileCreation",
   FamilySize: "familySize",
+  ProfileComplete: "profileComplete",
 };
 
 export const reactQueryKeys = {
@@ -17,6 +18,8 @@ export const UserProfile = [
   {
     screenNumber: 1,
     displayScreen: true,
+    selectedItems: 0,
+    limit: 1,
     cookingSkill: [
       {
         id: 1,
@@ -48,6 +51,8 @@ export const UserProfile = [
   {
     screenNumber: 2,
     displayScreen: false,
+    selectedItems: 0,
+    limit: 3,
     nutritionGoal: [
       {
         id: 1,
@@ -84,6 +89,8 @@ export const UserProfile = [
   {
     screenNumber: 3,
     displayScreen: false,
+    selectedItems: 0,
+    limit: 6,
     dietaryRequirements: [
       {
         id: 1,
@@ -120,6 +127,8 @@ export const UserProfile = [
   {
     screenNumber: 4,
     displayScreen: false,
+    selectedItems: 0,
+    limit: 6,
     currentDiets: [
       {
         id: 1,
@@ -156,7 +165,9 @@ export const UserProfile = [
   {
     screenNumber: 5,
     displayScreen: false,
-    dietaryRequirements: [
+    selectedItems: 0,
+    limit: 6,
+    healthIssues: [
       {
         id: 1,
         title: "Overweight/obese",
@@ -188,5 +199,28 @@ export const UserProfile = [
         checkBox: false,
       },
     ],
+  },
+];
+
+export const ProfileCompleteData = [
+  {
+    id: 1,
+    status: "complete",
+  },
+  {
+    id: 2,
+    status: "add",
+  },
+  {
+    id: 3,
+    status: "add",
+  },
+  {
+    id: 4,
+    status: "add",
+  },
+  {
+    id: 5,
+    status: "new",
   },
 ];

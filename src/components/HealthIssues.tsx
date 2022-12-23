@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
@@ -6,60 +6,51 @@ import { SCREENS } from "../utils/Constants";
 import Box from "./common/Box";
 import CTA from "./common/CTA";
 import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserProfile } from "../redux/slices/UserProfile";
 import Text from "./common/Text";
 
 interface InputTextProps {
   navigation?: any;
 }
 
-const data = [
-  {
-    id: 1,
-    title: "Overweight/obese",
-    checkBox: false,
-  },
-  {
-    id: 2,
-    title: "High blood pressure",
-    checkBox: false,
-  },
-  {
-    id: 3,
-    title: "Gout",
-    checkBox: false,
-  },
-  {
-    id: 4,
-    title: "Type 2 diabetes",
-    checkBox: false,
-  },
-  {
-    id: 5,
-    title: "Heart disease",
-    checkBox: false,
-  },
-  {
-    id: 6,
-    title: "Cancer",
-    checkBox: false,
-  },
-];
-
-const limit = 1;
-
 const HealthIssues: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
-  const [checkData, setCheckData] = useState(data);
+  const { userProfile } = useSelector((state) => state?.reducer);
+  const [profileData, setProfileData] = useState(userProfile.userProfile);
+  const [healthIssues, setHealthIssues] = useState(
+    userProfile.userProfile[4]?.healthIssues
+  );
   const [totalSelected, setTotalSelected] = useState(0);
+  const [limit, setLimit] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setValues();
+  }, []);
+
+  useEffect(() => {
+    setValues();
+  }, [userProfile]);
+
+  const setValues = () => {
+    if (userProfile.userProfile) {
+      setProfileData(userProfile.userProfile);
+      setHealthIssues(userProfile.userProfile[4]?.healthIssues);
+      setTotalSelected(userProfile.userProfile[4]?.selectedItems);
+      setLimit(userProfile.userProfile[4]?.healthIssues.length);
+    }
+  };
 
   const checkValueChanges = (item) => {
-    let newArray = checkData.map((element) => {
+    let selectedCount = totalSelected;
+    let newArray = healthIssues.map((element) => {
       if (item?.id === element?.id) {
-        if (!item?.checkBox === false) setTotalSelected(totalSelected - 1);
-        if (!item?.checkBox === true && totalSelected >= checkData.length) {
+        if (!item?.checkBox === false && selectedCount > 0) selectedCount--;
+        if (!item?.checkBox === true && totalSelected >= healthIssues.length) {
           return item;
         } else {
-          if (!item?.checkBox === true) setTotalSelected(totalSelected + 1);
+          if (!item?.checkBox === true) selectedCount++;
           return {
             ...element,
             checkBox: !item?.checkBox,
@@ -69,7 +60,34 @@ const HealthIssues: React.FC<InputTextProps> = (props) => {
         return element;
       }
     });
-    setCheckData(newArray);
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 5) {
+        return {
+          ...item,
+          selectedItems: selectedCount,
+          healthIssues: newArray,
+        };
+      } else return item;
+    });
+    dispatch(setUserProfile(newProfile));
+  };
+
+  const moveBackToComponent = () => {
+    let newProfile = profileData.map((item) => {
+      if (item.screenNumber === 4) {
+        return {
+          ...item,
+          displayScreen: true,
+        };
+      } else if (item.screenNumber === 5) {
+        return {
+          ...item,
+          displayScreen: false,
+        };
+      } else return item;
+    });
+
+    dispatch(setUserProfile(newProfile));
   };
 
   const CheckTile = ({ item }: any) => {
@@ -113,7 +131,7 @@ const HealthIssues: React.FC<InputTextProps> = (props) => {
             withIcon
             onlyIcon
             icon={() => <SvgXml height={17} width={17} xml={backArrow} />}
-            onPress={() => navigation.goBack()}
+            onPress={() => moveBackToComponent()}
           />
           <Text
             lineHeight={34.5}
@@ -150,7 +168,7 @@ const HealthIssues: React.FC<InputTextProps> = (props) => {
       </Box>
       <Box flex={1} padding={"10"} paddingTop={"30"}>
         <FlatList
-          data={checkData}
+          data={healthIssues}
           renderItem={({ item }: any) => <CheckTile item={item} />}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={({ item }: any) => (
@@ -179,7 +197,7 @@ const HealthIssues: React.FC<InputTextProps> = (props) => {
         color={"white"}
         lineHeight={23}
         marginBottom={"20"}
-        onPress={() => navigation.navigate(SCREENS.LoginScreen2)}
+        onPress={() => navigation.navigate(SCREENS.ProfileComplete)}
       >
         Next
       </CTA>
