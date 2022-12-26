@@ -8,6 +8,10 @@ export const SCREENS = {
   ProfileCreation: "profileCreation",
   FamilySize: "familySize",
   ProfileComplete: "profileComplete",
+  ResetScreen1: "resetScreen1",
+  ResetScreen2: "resetScreen2",
+  ResetScreen3: "resetScreen3",
+  ResetScreen4: "resetScreen4",
 };
 
 export const reactQueryKeys = {

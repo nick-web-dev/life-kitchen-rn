@@ -15,6 +15,10 @@ import UserProfileFLow from "../screens/auth/userProfile/userProfileFlow";
 import ProfileCreationScreen from "../screens/auth/userProfile/ProfileCreationScreen";
 import FamilySizeScreen from "../screens/auth/userProfile/FamilySizeScreen";
 import ProfileComplete from "../screens/auth/userProfile/ProfileComplete";
+import ResetPassword from "../screens/auth/resetPassword";
+import EmailSent from "../screens/auth/resetPassword/emailRecovery";
+import NewPassword from "../screens/auth/resetPassword/newPassword";
+import EmailSuccess from "../screens/auth/resetPassword/emailSuccess";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -50,6 +54,16 @@ const UnAuthenticatedStack = () => {
         <AuthStack.Screen
           name={SCREENS.ProfileComplete}
           component={ProfileComplete}
+        />
+        <AuthStack.Screen
+          name={SCREENS.ResetScreen1}
+          component={ResetPassword}
+        />
+        <AuthStack.Screen name={SCREENS.ResetScreen2} component={EmailSent} />
+        <AuthStack.Screen name={SCREENS.ResetScreen3} component={NewPassword} />
+        <AuthStack.Screen
+          name={SCREENS.ResetScreen4}
+          component={EmailSuccess}
         />
       </AuthStack.Navigator>
     </NavigationContainer>

@@ -15,21 +15,21 @@ import Form from "../../../components/common/Form";
 import FormButton from "../../../components/common/FormButton";
 import { FormField } from "../../../components/common/FormField";
 import Text from "../../../components/common/Text";
-import { LoginFormValues } from "../../../context/types";
+import { ResetEmail } from "../../../context/types";
 import { AppConstData } from "../../../utils/app-data";
 import { SCREENS } from "../../../utils/Constants";
 import { AppValidation } from "../../../utils/validation";
 
-let initialValues: LoginFormValues = {
+let initialValues: ResetEmail = {
   email: "",
-  password: "",
-  token: "token",
 };
 
-const LoginScreen2 = ({ navigation }: any) => {
-  let refValues = AppConstData.loginCredRef.map(() => useRef<any>());
+const ResetPassword = ({ navigation }: any) => {
+  let refValues = AppConstData.registerRef.map(() => useRef<any>());
+
   const handleSubmit = (data: any) => {
-    console.log("login data: ", data);
+    navigation.navigate(SCREENS.ResetScreen2);
+    console.log("email data: ", data);
   };
 
   return (
@@ -40,7 +40,7 @@ const LoginScreen2 = ({ navigation }: any) => {
         backgroundColor="transparent"
       />
       <Box paddingVertical={"40"} paddingHorizontal={"20"} flex={1}>
-        <Box flex={0.2}>
+        <Box>
           <CTAWithDynamicIcon
             borderRadius={"cta"}
             justifyContent={"center"}
@@ -55,8 +55,31 @@ const LoginScreen2 = ({ navigation }: any) => {
             onPress={() => navigation.goBack()}
           />
         </Box>
-        <Box flex={0.8} paddingHorizontal={"20"} justifyContent={"center"}>
+
+        <Box flex={1} paddingHorizontal={"20"}>
           <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+            <Box marginVertical={"60"}>
+              <Text
+                lineHeight={57}
+                numberOfLines={1}
+                fontSize={60}
+                color={"white"}
+                fontWeight={"400"}
+                alignSelf={"center"}
+              >
+                Reset your password
+              </Text>
+              <Text
+                lineHeight={23}
+                numberOfLines={1}
+                fontSize={24}
+                color={"white"}
+                fontWeight={"400"}
+                alignSelf={"center"}
+              >
+                You will receive an email with reset instructions.
+              </Text>
+            </Box>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : null}
               style={styles.container}
@@ -65,24 +88,14 @@ const LoginScreen2 = ({ navigation }: any) => {
                 android: 500,
               })}
             >
-              <Text
-                lineHeight={57}
-                numberOfLines={2}
-                fontSize={50}
-                color={"white"}
-                fontWeight={"400"}
-                marginBottom={"40"}
-              >
-                Log In
-              </Text>
               <Form
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                validationSchema={AppValidation.validationSchemaLogin()}
+                // validationSchema={AppValidation.validationSchemaRegister()}
               >
                 <FormField
-                  ref={refValues[0]}
-                  placeHolder={"Email"}
+                  ref={refValues[1]}
+                  placeHolder={"Email Address"}
                   returnKeyType="next"
                   backgroundColor={"black"}
                   color={"white"}
@@ -93,36 +106,11 @@ const LoginScreen2 = ({ navigation }: any) => {
                   onChangeText={() => {}}
                   marginBottom={"20"}
                   name={"email"}
-                  onSubmitEditing={() => refValues[1]?.current?.focus()}
+                  onSubmitEditing={() => refValues[2]?.current?.focus()}
                 />
-                <FormField
-                  ref={refValues[1]}
-                  placeHolder={"Password"}
-                  returnKeyType="done"
-                  backgroundColor={"black"}
-                  color={"white"}
-                  borderColor={"grey2"}
-                  borderWidth={1}
-                  height={70}
-                  placeholderTextColor={"#777777"}
-                  onChangeText={() => {}}
-                  marginBottom={"20"}
-                  name={"password"}
-                  secureTextEntry={true}
-                />
-                <Text
-                  onPress={() => navigation.navigate(SCREENS.ResetScreen1)}
-                  lineHeight={17}
-                  numberOfLines={2}
-                  fontSize={15}
-                  color={"brandGreen"}
-                  fontWeight={"400"}
-                  marginBottom={"70"}
-                >
-                  I forgot my password
-                </Text>
+                <Box marginVertical={"5"} />
                 <FormButton
-                  title="Log In"
+                  title="Email Recovery Link"
                   color={"white"}
                   loading={false}
                   disabled={false}
@@ -148,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen2;
+export default ResetPassword;

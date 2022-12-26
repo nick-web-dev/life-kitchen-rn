@@ -10,3 +10,7 @@ export interface RegisterFormValues {
   phoneNumber: string;
   password: string;
 }
+
+export interface ResetEmail {
+  email: string;
+}
