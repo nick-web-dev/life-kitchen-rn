@@ -23,8 +23,9 @@ const UserProfile = ({ navigation }: any) => {
         backgroundColor="transparent"
       />
       <Box marginTop={"20"} paddingHorizontal={"20"} flex={1}>
-        <Box marginTop={"20"}>
+        <Box marginTop={"10"}>
           <CTAWithDynamicIcon
+            marginTop={"10"}
             borderRadius={"cta"}
             justifyContent={"center"}
             alignItems={"center"}

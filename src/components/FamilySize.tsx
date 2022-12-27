@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
@@ -15,11 +15,19 @@ interface InputTextProps {
 
 const FamilySize: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
+  const [sliderValue, setSliderValue] = useState(1);
+
+  const onSliderValueChange = (value) => {
+    console.log("value: ", value);
+    setSliderValue(Math.ceil(value));
+  };
 
   return (
     <Box marginTop={"20"} paddingHorizontal={"20"} flex={1}>
       <Box flex={0.2}>
         <CTAWithDynamicIcon
+          marginTop={"20"}
+          marginBottom={"10"}
           borderRadius={"cta"}
           justifyContent={"center"}
           alignItems={"center"}
@@ -65,7 +73,7 @@ const FamilySize: React.FC<InputTextProps> = (props) => {
           paddingHorizontal={"20"}
           alignSelf={"center"}
         >
-          4
+          {sliderValue}
         </Text>
         <Text
           lineHeight={34.5}
@@ -79,7 +87,12 @@ const FamilySize: React.FC<InputTextProps> = (props) => {
         >
           Family Members
         </Text>
-        <SliderComponent />
+        <SliderComponent
+          value={sliderValue}
+          onValueChange={onSliderValueChange}
+          minimumLimit={1}
+          maximumLimit={20}
+        />
       </Box>
       <Box marginBottom={"30"}>
         <Text

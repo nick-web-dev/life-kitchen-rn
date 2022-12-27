@@ -2,17 +2,29 @@ import Slider from "@react-native-community/slider";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-interface Props {}
+interface Props {
+  onValueChange: any;
+  value: number;
+  minimumLimit: number;
+  maximumLimit: number;
+}
 
-const SliderComponent = ({}: Props) => {
+const SliderComponent = ({
+  onValueChange,
+  value,
+  minimumLimit,
+  maximumLimit,
+}: Props) => {
   return (
     <Slider
       style={{ height: 100 }}
-      minimumValue={0}
-      maximumValue={1}
+      minimumValue={minimumLimit}
+      maximumValue={maximumLimit}
       minimumTrackTintColor="#FFFFFF"
       maximumTrackTintColor="#FFFFFF"
       thumbTintColor={"#1ABE73"}
+      onValueChange={onValueChange}
+      value={value}
     />
   );
 };

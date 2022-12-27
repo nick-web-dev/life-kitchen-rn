@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { FlatList, StyleSheet, TextInput } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { backArrow } from "../assets/svg";
 import { SCREENS } from "../utils/Constants";
@@ -9,6 +9,7 @@ import CTAWithDynamicIcon from "./common/CTAWithDynamicIcon";
 import RadioButtonRN from "radio-buttons-react-native";
 import Input from "./common/Input";
 import Text from "./common/Text";
+import RadioButton from "./RadioButton";
 
 interface InputTextProps {
   navigation?: any;
@@ -21,16 +22,21 @@ interface textInterface {
 
 const maleData = [
   {
+    id: 1,
     label: "Male",
+    selected: false,
   },
   {
+    id: 2,
     label: "Female",
+    selected: false,
   },
 ];
 
 const ProfileCreation: React.FC<InputTextProps> = (props) => {
   const { navigation } = props;
   const [age, setAge] = useState("");
+  const [radioArray, setRadioArray] = useState(maleData);
 
   const TextTile = ({ name, title }: textInterface) => {
     return (
@@ -72,6 +78,7 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
           {title}
         </Text>
         <Input
+          fontSize={40}
           keyboardType={"numeric"}
           placeholder={"How old are you?"}
           value={age}
@@ -91,10 +98,60 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
     );
   };
 
+  const onChangeRadio = (item) => {
+    let newArr = radioArray.map((value) => {
+      if (item?.id === value?.id) {
+        return {
+          ...value,
+          selected: !item.selected,
+        };
+      } else {
+        if (!item.selected === true) {
+          return {
+            ...value,
+            selected: false,
+          };
+        } else {
+          return value;
+        }
+      }
+    });
+    setRadioArray(newArr);
+  };
+
+  const DisplayRadioBtn = ({ item }) => {
+    return (
+      <Box
+        flexDirection={"row"}
+        height={60}
+        justifyContent={"center"}
+        alignContent={"center"}
+      >
+        <RadioButton
+          onPress={onChangeRadio}
+          item={item}
+          borderColor={"#ffffff"}
+        />
+        <Text
+          lineHeight={46}
+          numberOfLines={2}
+          fontSize={40}
+          color={"white"}
+          fontWeight={"400"}
+          paddingHorizontal={"20"}
+        >
+          {item?.label}
+        </Text>
+      </Box>
+    );
+  };
+
   return (
     <Box marginTop={"20"} paddingHorizontal={"20"} flex={1}>
-      <Box flex={0.2}>
+      <Box flex={0.25}>
         <CTAWithDynamicIcon
+          marginTop={"20"}
+          marginBottom={"10"}
           borderRadius={"cta"}
           justifyContent={"center"}
           alignItems={"center"}
@@ -119,7 +176,7 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
           Let’s create your profile
         </Text>
       </Box>
-      <Box flex={0.75} paddingHorizontal={"20"}>
+      <Box flex={0.7} paddingHorizontal={"20"}>
         <Box flexDirection={"row"} justifyContent={"flex-start"}>
           <TextTile name={"Kevin"} title={"First name"} />
           <TextTile name={"Claudio"} title={"Last name"} />
@@ -129,28 +186,11 @@ const ProfileCreation: React.FC<InputTextProps> = (props) => {
         </Box>
         <Box flex={1} flexDirection={"row"}>
           <Box flex={1}>
-            <RadioButtonRN
-              circleSize={40}
-              activeColor={"#FFFFFF"}
-              deactiveColor={"#C8C8C8"}
-              box={false}
-              data={maleData}
-              style={{
-                width: "50%",
-                flexDirection: "row",
-              }}
-              boxStyle={{
-                width: "100%",
-              }}
-              textStyle={{
-                fontFamily: "Helvetica",
-                fontWeight: "400",
-                color: "#ffffff",
-                fontSize: 40,
-                lineHeight: 46,
-                marginLeft: 20,
-              }}
-              selectedBtn={(e) => console.log(e)}
+            <FlatList
+              horizontal={true}
+              data={radioArray}
+              renderItem={({ item }: any) => <DisplayRadioBtn item={item} />}
+              keyExtractor={(item) => item.id.toString()}
             />
           </Box>
         </Box>

@@ -28,7 +28,7 @@ const NewPassword = ({ navigation }: any) => {
   let refValues = AppConstData.registerRef.map(() => useRef<any>());
 
   const handleSubmit = (data: any) => {
-    navigation.navigate(SCREENS.UserProfile);
+    navigation.navigate(SCREENS.ResetScreen4);
     console.log("password data: ", data);
   };
 

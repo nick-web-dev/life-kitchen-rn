@@ -11,6 +11,7 @@ const palette = {
   grey2: "rgba(255, 255, 255, 0.5)",
   grey3: "#C8C8C8",
   grey4: "#777777",
+  grey5: "##989898",
 };
 
 const commonFontStyles = {
@@ -40,6 +41,7 @@ export const theme = createTheme({
     grey2: palette.grey2,
     grey3: palette.grey3,
     grey4: palette.grey4,
+    grey5: palette.grey5,
   },
   spacing: {
     "0": 0,
@@ -346,5 +348,6 @@ export const darkTheme: Theme = {
     grey2: palette.grey2,
     grey3: palette.grey3,
     grey4: palette.grey4,
+    grey5: palette.grey5,
   },
 };

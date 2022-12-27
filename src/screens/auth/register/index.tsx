@@ -42,9 +42,10 @@ const Register = ({ navigation }: any) => {
         translucent
         backgroundColor="transparent"
       />
-      <Box paddingVertical={"40"} paddingHorizontal={"20"} flex={1}>
+      <Box paddingVertical={"30"} paddingHorizontal={"20"} flex={1}>
         <Box flex={0.2}>
           <CTAWithDynamicIcon
+            marginTop={"10"}
             borderRadius={"cta"}
             justifyContent={"center"}
             alignItems={"center"}

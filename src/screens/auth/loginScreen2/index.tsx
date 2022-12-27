@@ -40,7 +40,7 @@ const LoginScreen2 = ({ navigation }: any) => {
         backgroundColor="transparent"
       />
       <Box paddingVertical={"40"} paddingHorizontal={"20"} flex={1}>
-        <Box flex={0.2}>
+        <Box flex={0.2} marginVertical={"10"}>
           <CTAWithDynamicIcon
             borderRadius={"cta"}
             justifyContent={"center"}
