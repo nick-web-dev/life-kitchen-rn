@@ -30,6 +30,7 @@ const LoginScreen2 = ({ navigation }: any) => {
   let refValues = AppConstData.loginCredRef.map(() => useRef<any>());
   const handleSubmit = (data: any) => {
     console.log("login data: ", data);
+    navigation.navigate(SCREENS.Dashboard);
   };
 
   return (
@@ -78,7 +79,7 @@ const LoginScreen2 = ({ navigation }: any) => {
               <Form
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                validationSchema={AppValidation.validationSchemaLogin()}
+                // validationSchema={AppValidation.validationSchemaLogin()}
               >
                 <FormField
                   ref={refValues[0]}

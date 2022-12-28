@@ -1,20 +1,40 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
-import CarSVg from "../assets/images/cart2.svg";
+import { StyleSheet, Touchable, TouchableOpacity } from "react-native";
+import { SvgXml } from "react-native-svg";
+import { dash1, dash2 } from "../assets/svg";
+import Box from "./common/Box";
+import Text from "./common/Text";
 
 interface props {
   headerLable: string;
+  navigation: any;
 }
 
-const MainHeader = ({ headerLable }: props) => {
+const MainHeader = ({ headerLable = "Claudio Family", navigation }: props) => {
   return (
-    <View style={styles.headerView}>
-      {/* <Image
-        style={styles.logoStyle}
-        source={require('../assets/images/logo.png')}
-      /> */}
-      {/* <CarSVg width={30} height={30} /> */}
-    </View>
+    <Box
+      marginTop={"20"}
+      flexDirection={"row"}
+      justifyContent={"space-between"}
+    >
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <SvgXml height={29} width={29} xml={dash2} />
+      </TouchableOpacity>
+      <Box justifyContent={"center"} flexDirection={"row"}>
+        <SvgXml height={29} width={29} xml={dash1} />
+        <Text
+          lineHeight={19}
+          numberOfLines={2}
+          fontSize={16}
+          color={"white"}
+          fontWeight={"700"}
+          alignSelf={"center"}
+          paddingLeft={"10"}
+        >
+          {headerLable}
+        </Text>
+      </Box>
+    </Box>
   );
 };
 

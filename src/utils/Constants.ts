@@ -1,3 +1,5 @@
+import { dash3, dash4, dash5, dash6, dash7 } from "../assets/svg";
+
 export const SCREENS = {
   LoginScreen1: "LoginScreen1",
   LoginScreen2: "LoginScreen2",
@@ -12,6 +14,7 @@ export const SCREENS = {
   ResetScreen2: "resetScreen2",
   ResetScreen3: "resetScreen3",
   ResetScreen4: "resetScreen4",
+  Dashboard: "dashboard",
 };
 
 export const reactQueryKeys = {
@@ -226,5 +229,38 @@ export const ProfileCompleteData = [
   {
     id: 5,
     status: "new",
+  },
+];
+
+export const DashboardData = [
+  {
+    id: 1,
+    label: "Meals",
+    icon: dash7,
+    navigateScreen: "",
+  },
+  {
+    id: 2,
+    label: "Inventory",
+    icon: dash4,
+    navigateScreen: "",
+  },
+  {
+    id: 3,
+    label: "Order",
+    icon: dash3,
+    navigateScreen: "",
+  },
+  {
+    id: 4,
+    label: "My Family",
+    icon: dash5,
+    navigateScreen: "",
+  },
+  {
+    id: 5,
+    label: "Settings",
+    icon: dash6,
+    navigateScreen: "",
   },
 ];

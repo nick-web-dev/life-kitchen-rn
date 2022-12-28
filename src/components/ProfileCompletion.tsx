@@ -18,16 +18,10 @@ const ProfileCompletion: React.FC<InputTextProps> = (props) => {
 
   const NameTile = () => {
     return (
-      <TouchableOpacity
-        style={{
-          height: 218,
-          width: 218,
-          marginRight: 10,
-        }}
-      >
+      <TouchableOpacity style={styles.nameStyle}>
         <LinearGradient
           colors={["#1ABE73", "#00170D"]}
-          style={{ flex: 1, justifyContent: "center", borderRadius: 8 }}
+          style={styles.nameGradient}
         >
           <Text
             lineHeight={34}
@@ -46,17 +40,7 @@ const ProfileCompletion: React.FC<InputTextProps> = (props) => {
 
   const AddTile = () => {
     return (
-      <TouchableOpacity
-        style={{
-          height: 218,
-          width: 218,
-          backgroundColor: "#ffffff",
-          justifyContent: "center",
-          borderRadius: 8,
-          alignItems: "center",
-          marginRight: 10,
-        }}
-      >
+      <TouchableOpacity style={styles.addStyleTile}>
         <SvgXml height={64} width={64} xml={plusIcon} />
       </TouchableOpacity>
     );
@@ -126,7 +110,7 @@ const ProfileCompletion: React.FC<InputTextProps> = (props) => {
       </Box>
       <Box flex={1} paddingHorizontal={"20"} marginVertical={"30"}>
         <FlatList
-          numColumns={"3"}
+          numColumns={3}
           data={ProfileCompleteData}
           renderItem={({ item }: any) => (
             <>
@@ -171,6 +155,21 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 14,
     fontWeight: "700",
+  },
+  nameStyle: {
+    height: 218,
+    width: 218,
+    marginRight: 10,
+  },
+  nameGradient: { flex: 1, justifyContent: "center", borderRadius: 8 },
+  addStyleTile: {
+    height: 218,
+    width: 218,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    borderRadius: 8,
+    alignItems: "center",
+    marginRight: 10,
   },
 });
 
