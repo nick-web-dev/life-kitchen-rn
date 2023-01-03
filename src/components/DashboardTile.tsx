@@ -6,12 +6,18 @@ import Text from "./common/Text";
 
 interface props {
   item: any;
+  onPress: (screenName: any) => void;
 }
 
-const DashboardTile = ({ item }: props) => {
-  const { onPress, label, icon } = item;
+const DashboardTile = ({ item, onPress }: props) => {
+  const { label, icon } = item;
   return (
-    <TouchableOpacity onPress={() => {}} style={styles.mainStyle}>
+    <TouchableOpacity
+      onPress={() => {
+        onPress(item?.navigateScreen);
+      }}
+      style={styles.mainStyle}
+    >
       <LinearGradient
         colors={["#1ABE73", "#00170D", "#000000"]}
         start={{ x: 0, y: 0 }}

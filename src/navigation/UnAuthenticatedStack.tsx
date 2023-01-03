@@ -20,6 +20,7 @@ import EmailSent from "../screens/auth/resetPassword/emailRecovery";
 import NewPassword from "../screens/auth/resetPassword/newPassword";
 import EmailSuccess from "../screens/auth/resetPassword/emailSuccess";
 import Dashboard from "../screens/mainScreen/dashboard";
+import MealPlan from "../screens/mainScreen/mealPlan";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -67,6 +68,7 @@ const UnAuthenticatedStack = () => {
           component={EmailSuccess}
         />
         <AuthStack.Screen name={SCREENS.Dashboard} component={Dashboard} />
+        <AuthStack.Screen name={SCREENS.MealPlan} component={MealPlan} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

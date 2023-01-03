@@ -6,12 +6,16 @@ const palette = {
   white: "#FFFFFF",
   transparent: "transparent",
   black: "#000000",
+  backgroundGrey: "#595959",
 
   grey1: "#2C2C2C",
   grey2: "rgba(255, 255, 255, 0.5)",
   grey3: "#C8C8C8",
   grey4: "#777777",
   grey5: "##989898",
+  grey6: "#474747",
+
+  red1: "#FF4853",
 };
 
 const commonFontStyles = {
@@ -36,12 +40,16 @@ export const theme = createTheme({
     white: palette.white,
     transparent: palette.transparent,
     black: palette.black,
+    backgroundGrey: palette.backgroundGrey,
 
     grey1: palette.grey1,
     grey2: palette.grey2,
     grey3: palette.grey3,
     grey4: palette.grey4,
     grey5: palette.grey5,
+    grey6: palette.grey6,
+
+    red1: palette.red1,
   },
   spacing: {
     "0": 0,
@@ -343,11 +351,15 @@ export const darkTheme: Theme = {
     secondary: palette.secondaryGreen,
     transparent: palette.transparent,
     black: palette.black,
+    backgroundGrey: palette.backgroundGrey,
 
     grey1: palette.grey1,
     grey2: palette.grey2,
     grey3: palette.grey3,
     grey4: palette.grey4,
     grey5: palette.grey5,
+    grey6: palette.grey6,
+
+    red1: palette.red1,
   },
 };

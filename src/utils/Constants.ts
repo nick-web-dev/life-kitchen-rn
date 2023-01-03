@@ -15,6 +15,7 @@ export const SCREENS = {
   ResetScreen3: "resetScreen3",
   ResetScreen4: "resetScreen4",
   Dashboard: "dashboard",
+  MealPlan: "mealPlan",
 };
 
 export const reactQueryKeys = {
@@ -237,7 +238,7 @@ export const DashboardData = [
     id: 1,
     label: "Meals",
     icon: dash7,
-    navigateScreen: "",
+    navigateScreen: "MealPlan",
   },
   {
     id: 2,
