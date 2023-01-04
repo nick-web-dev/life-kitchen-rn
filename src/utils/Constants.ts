@@ -16,6 +16,7 @@ export const SCREENS = {
   ResetScreen4: "resetScreen4",
   Dashboard: "dashboard",
   MealPlan: "mealPlan",
+  MealDetails: "mealDetails",
 };
 
 export const reactQueryKeys = {

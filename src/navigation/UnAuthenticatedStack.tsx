@@ -21,6 +21,7 @@ import NewPassword from "../screens/auth/resetPassword/newPassword";
 import EmailSuccess from "../screens/auth/resetPassword/emailSuccess";
 import Dashboard from "../screens/mainScreen/dashboard";
 import MealPlan from "../screens/mainScreen/mealPlan";
+import MealDetails from "../screens/mainScreen/mealDetails";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -69,6 +70,7 @@ const UnAuthenticatedStack = () => {
         />
         <AuthStack.Screen name={SCREENS.Dashboard} component={Dashboard} />
         <AuthStack.Screen name={SCREENS.MealPlan} component={MealPlan} />
+        <AuthStack.Screen name={SCREENS.MealDetails} component={MealDetails} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

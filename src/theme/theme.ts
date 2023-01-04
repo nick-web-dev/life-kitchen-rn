@@ -15,7 +15,11 @@ const palette = {
   grey5: "##989898",
   grey6: "#474747",
 
+  lightGrey: "#CACACA",
+
   red1: "#FF4853",
+
+  green1: "#05B68B",
 };
 
 const commonFontStyles = {
@@ -49,7 +53,11 @@ export const theme = createTheme({
     grey5: palette.grey5,
     grey6: palette.grey6,
 
+    lightGrey: palette.lightGrey,
+
     red1: palette.red1,
+
+    green1: palette.green1,
   },
   spacing: {
     "0": 0,
@@ -247,6 +255,7 @@ export const theme = createTheme({
     "73": 73,
     "50": 50,
     "40": 40,
+    "12": 12,
     "10": 10,
     "35": 35,
     "23": 23,
@@ -360,6 +369,10 @@ export const darkTheme: Theme = {
     grey5: palette.grey5,
     grey6: palette.grey6,
 
+    lightGrey: palette.lightGrey,
+
     red1: palette.red1,
+
+    green1: palette.green1,
   },
 };

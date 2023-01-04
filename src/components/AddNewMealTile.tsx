@@ -5,11 +5,9 @@ import { lunchIcon } from "../assets/svg";
 import Box from "./common/Box";
 import Text from "./common/Text";
 
-interface Props {
-  icon: any;
-}
+interface Props {}
 
-const AddNewMealTile = ({ icon }: Props) => {
+const AddNewMealTile = ({}: Props) => {
   return (
     <Box
       backgroundColor={"grey6"}

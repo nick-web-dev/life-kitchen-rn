@@ -118,3 +118,8 @@ export const whiteArrow = `<svg width="17" height="17" viewBox="0 0 17 17" fill=
 <path fill-rule="evenodd" clip-rule="evenodd" d="M0 8.5177L8.54168 17L9.91521 15.6193L3.80238 9.47613H17V7.52387H3.80238L9.91521 1.38065L8.54168 0L0 8.5177Z" fill="white"/>
 </svg>
 `;
+
+export const greyDoneArrow = `<svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 4.83333L4.38 7.5L9.5 1.5" stroke="#474747" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
