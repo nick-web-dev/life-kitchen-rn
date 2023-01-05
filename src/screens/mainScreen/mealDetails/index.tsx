@@ -1,22 +1,18 @@
-import moment from "moment";
-import React, { useState } from "react";
+import React from "react";
 import {
   Dimensions,
-  FlatList,
   Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
-import AddNewMealTile from "../../../components/AddNewMealTile";
-import Calendar from "../../../components/Calendar";
-import Box from "../../../components/common/Box";
-import MealDoneTile from "../../../components/MealDoneTile";
-import MealHeader from "../../../components/MealHeader";
-import PendingMealTile from "../../../components/PendingMealTile";
-import MealIcon2 from "../../../assets/svg/mealIcon4.svg";
+import { SvgXml } from "react-native-svg";
+import { boldCrossIcon } from "../../../assets/svg";
 import AvatarIcon1 from "../../../assets/svg/AvatarIcon1.svg";
 import AvatarIcon2 from "../../../assets/svg/AvatarIcon2.svg";
+import MealIcon2 from "../../../assets/svg/mealIcon4.svg";
+import Box from "../../../components/common/Box";
 import Text from "../../../components/common/Text";
 
 interface props {
@@ -27,11 +23,32 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const MealDetails = ({ navigation }: props) => {
+  const CrossButton = () => {
+    return (
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Box
+          height={32}
+          width={32}
+          backgroundColor={"white"}
+          borderRadius={"35"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <SvgXml height={16} width={16} xml={boldCrossIcon} />
+        </Box>
+      </TouchableOpacity>
+    );
+  };
+
+  const BarView = () => {
+    return <Box backgroundColor={"grey6"} height={104}></Box>;
+  };
+
   return (
     <SafeAreaView style={styles.mainView}>
       <StatusBar translucent backgroundColor="transparent" />
       <Box flex={0.3} alignItems={"center"} justifyContent={"center"}>
-        <MealIcon2 width={windowWidth} height={windowHeight} />
+        <MealIcon2 height={windowHeight} />
         <Box
           position={"absolute"}
           left={25}
@@ -70,8 +87,18 @@ const MealDetails = ({ navigation }: props) => {
             </Text>
           </Box>
         </Box>
+        <Box
+          position={"absolute"}
+          top={Platform.OS === "android" ? 30 : 10}
+          right={35}
+        >
+          <CrossButton />
+        </Box>
+        <Box position={"absolute"}>
+          <BarView />
+        </Box>
       </Box>
-      <Box flex={0.45}>
+      <Box flex={0.7}>
         <Box></Box>
       </Box>
     </SafeAreaView>
@@ -81,7 +108,7 @@ const MealDetails = ({ navigation }: props) => {
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
-    backgroundColor: "#2C2C2C",
+    backgroundColor: "#171717",
   },
 });
 

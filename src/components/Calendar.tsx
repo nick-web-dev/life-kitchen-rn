@@ -18,7 +18,7 @@ const Calendar = ({ setCurrentDate, currentDate }: Props) => {
       calendarAnimation={{ type: "sequence", duration: 30 }}
       style={{ height: 100, paddingTop: 20, paddingBottom: 10 }}
       calendarHeaderStyle={{ color: "white" }}
-      calendarColor={"#2C2C2C"}
+      calendarColor={"#171717"}
       dateNumberStyle={{ color: "grey" }}
       dateNameStyle={{ color: "grey" }}
       highlightDateNumberStyle={{

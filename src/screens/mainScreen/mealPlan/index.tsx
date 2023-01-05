@@ -66,7 +66,7 @@ const MealPlan = ({ navigation }: props) => {
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
-    backgroundColor: "#2C2C2C",
+    backgroundColor: "#171717",
     justifyContent: "center",
     paddingVertical: 20,
   },
