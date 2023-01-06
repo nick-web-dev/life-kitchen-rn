@@ -22,6 +22,8 @@ const palette = {
   green1: "#05B68B",
 
   black1: "#171717",
+
+  yellow1: "#FFCB45",
 };
 
 const commonFontStyles = {
@@ -62,6 +64,8 @@ export const theme = createTheme({
     green1: palette.green1,
 
     black1: palette.black1,
+
+    yellow1: palette.yellow1,
   },
   spacing: {
     "0": 0,
@@ -380,5 +384,7 @@ export const darkTheme: Theme = {
     green1: palette.green1,
 
     black1: palette.black1,
+
+    yellow1: palette.yellow1,
   },
 };

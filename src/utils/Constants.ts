@@ -266,3 +266,51 @@ export const DashboardData = [
     navigateScreen: "",
   },
 ];
+
+export const IngredientsData = [
+  {
+    id: 1,
+    title: "Spaghetti Pasta",
+    gram: "500g",
+    price: "$2.75",
+    purchaseText: "Need to purchase",
+    pantry: false,
+  },
+  {
+    id: 2,
+    title: "Beef Mince (8% fat)",
+    gram: "1kg",
+    price: "$2.75",
+    purchaseText: "Need to purchase",
+    pantry: false,
+  },
+  {
+    id: 3,
+    title: "Extra-Virgin Olive Oil",
+    gram: "2 tbsp",
+    purchaseText: "In the pantry",
+    pantry: true,
+  },
+  {
+    id: 4,
+    title: "Medium onion",
+    gram: "2 pieces",
+    purchaseText: "In the pantry",
+    pantry: true,
+  },
+];
+
+export const ReplacementData = [
+  {
+    id: 6,
+    title: "Wholewheat Spaghetti Pasta",
+  },
+  {
+    id: 7,
+    title: "Turkey Mince (2% fat)",
+  },
+  {
+    id: 8,
+    title: "Canola Oil",
+  },
+];
