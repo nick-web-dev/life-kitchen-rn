@@ -1,4 +1,4 @@
-package com.lifekitchen;
+package com.seekers.lifekitchen;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;

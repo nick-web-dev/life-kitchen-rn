@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -19,6 +19,7 @@ import { LoginFormValues } from "../../../context/types";
 import { AppConstData } from "../../../utils/app-data";
 import { SCREENS } from "../../../utils/Constants";
 import { AppValidation } from "../../../utils/validation";
+import auth from "@react-native-firebase/auth";
 
 let initialValues: LoginFormValues = {
   email: "",
@@ -30,8 +31,40 @@ const LoginScreen2 = ({ navigation }: any) => {
   let refValues = AppConstData.loginCredRef.map(() => useRef<any>());
   const handleSubmit = (data: any) => {
     console.log("login data: ", data);
-    navigation.navigate(SCREENS.Dashboard);
+    auth()
+      .createUserWithEmailAndPassword(data?.email, data?.password)
+      .then(() => {
+        console.log("User account created & signed in!");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          console.log("That email address is already in use!");
+        }
+
+        if (error.code === "auth/invalid-email") {
+          console.log("That email address is invalid!");
+        }
+
+        console.error(error);
+      });
+    // navigation.navigate(SCREENS.Dashboard);
   };
+
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    console.log("user: ", user);
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
     <SafeAreaView style={styles.mainView}>

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "602735672310",
+    "project_id": "lk-api-782e5",
+    "storage_bucket": "lk-api-782e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602735672310:android:b6c92408968de31b3de5d7",
+        "android_client_info": {
+          "package_name": "com.seekers.lifekitchen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602735672310-8ruhtt2op0bedu8gi96h12bbm4otqa2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkLwHMOM_GtxFLyznNXz5tN6vp9FIhULQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602735672310-8ruhtt2op0bedu8gi96h12bbm4otqa2b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602735672310-03r5js55qqubboh47tt81msnqb3q7loj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seekers.lifekitchen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

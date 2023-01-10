@@ -1,22 +1,22 @@
 import React from "react";
 import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
   Dimensions,
   Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
 } from "react-native";
+import { SvgXml } from "react-native-svg";
+import { iPhoneIcon } from "../../../assets/svg";
+import FacebookIcon from "../../../assets/svg/facebookIcon.svg";
+import GoogleIcon from "../../../assets/svg/googleIcon.svg";
 import LoginSvg from "../../../assets/svg/loginSvg.svg";
 import Box from "../../../components/common/Box";
 import CTA from "../../../components/common/CTA";
+import CTAText from "../../../components/common/CTAText";
 import CTAWithDynamicIcon from "../../../components/common/CTAWithDynamicIcon";
 import Text from "../../../components/common/Text";
-import FacebookIcon from "../../../assets/svg/facebookIcon.svg";
-import GoogleIcon from "../../../assets/svg/googleIcon.svg";
-import { SvgXml } from "react-native-svg";
-import { iPhoneIcon } from "../../../assets/svg";
 import { SCREENS } from "../../../utils/Constants";
-import CTAText from "../../../components/common/CTAText";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

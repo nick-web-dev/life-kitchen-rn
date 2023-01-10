@@ -1,4 +1,4 @@
-package com.lifekitchen.newarchitecture.modules;
+package com.seekers.lifekitchen.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

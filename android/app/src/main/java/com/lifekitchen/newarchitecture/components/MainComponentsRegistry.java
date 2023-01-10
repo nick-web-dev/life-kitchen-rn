@@ -1,4 +1,4 @@
-package com.lifekitchen.newarchitecture.components;
+package com.seekers.lifekitchen.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
