@@ -1,27 +1,24 @@
-import React from "react";
 import {
-  NavigationContainer,
   DarkTheme,
   DefaultTheme,
+  NavigationContainer,
 } from "@react-navigation/native";
-import { Appearance } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SCREENS } from "../utils/Constants";
+import React from "react";
+import { Appearance } from "react-native";
 import LoginScreen1 from "../screens/auth/loginScreen1";
 import LoginScreen2 from "../screens/auth/loginScreen2";
 import Register from "../screens/auth/register";
-import UserProfile from "../screens/auth/userProfile";
-import UserProfileFLow from "../screens/auth/userProfile/userProfileFlow";
-import ProfileCreationScreen from "../screens/auth/userProfile/ProfileCreationScreen";
-import FamilySizeScreen from "../screens/auth/userProfile/FamilySizeScreen";
-import ProfileComplete from "../screens/auth/userProfile/ProfileComplete";
 import ResetPassword from "../screens/auth/resetPassword";
 import EmailSent from "../screens/auth/resetPassword/emailRecovery";
-import NewPassword from "../screens/auth/resetPassword/newPassword";
 import EmailSuccess from "../screens/auth/resetPassword/emailSuccess";
-import Dashboard from "../screens/mainScreen/dashboard";
-import MealPlan from "../screens/mainScreen/mealPlan";
-import MealDetails from "../screens/mainScreen/mealDetails";
+import NewPassword from "../screens/auth/resetPassword/newPassword";
+import UserProfile from "../screens/auth/userProfile";
+import FamilySizeScreen from "../screens/auth/userProfile/FamilySizeScreen";
+import ProfileComplete from "../screens/auth/userProfile/ProfileComplete";
+import ProfileCreationScreen from "../screens/auth/userProfile/ProfileCreationScreen";
+import UserProfileFLow from "../screens/auth/userProfile/userProfileFlow";
+import { SCREENS } from "../utils/Constants";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -68,9 +65,6 @@ const UnAuthenticatedStack = () => {
           name={SCREENS.ResetScreen4}
           component={EmailSuccess}
         />
-        <AuthStack.Screen name={SCREENS.Dashboard} component={Dashboard} />
-        <AuthStack.Screen name={SCREENS.MealPlan} component={MealPlan} />
-        <AuthStack.Screen name={SCREENS.MealDetails} component={MealDetails} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

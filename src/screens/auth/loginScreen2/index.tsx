@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -16,9 +16,11 @@ import FormButton from "../../../components/common/FormButton";
 import { FormField } from "../../../components/common/FormField";
 import Text from "../../../components/common/Text";
 import { LoginFormValues } from "../../../context/types";
+import { signInUser } from "../../../network/firebaseServices";
 import { AppConstData } from "../../../utils/app-data";
 import { SCREENS } from "../../../utils/Constants";
-import { AppValidation } from "../../../utils/validation";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../redux/slices/UserSlice";
 import auth from "@react-native-firebase/auth";
 
 let initialValues: LoginFormValues = {
@@ -29,12 +31,30 @@ let initialValues: LoginFormValues = {
 
 const LoginScreen2 = ({ navigation }: any) => {
   let refValues = AppConstData.loginCredRef.map(() => useRef<any>());
-  const handleSubmit = (data: any) => {
+
+  const dispatch = useDispatch();
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    console.log("user: ", user);
+    dispatch(setUser(user));
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  const handleSubmit = async (data: any) => {
     console.log("login data: ", data);
     auth()
-      .createUserWithEmailAndPassword(data?.email, data?.password)
-      .then(() => {
-        console.log("User account created & signed in!");
+      .signInWithEmailAndPassword(data?.email, data?.password)
+      .then((res) => {
+        console.log("User account created & signed in!: ", res);
+        dispatch(setUser(res));
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -44,27 +64,9 @@ const LoginScreen2 = ({ navigation }: any) => {
         if (error.code === "auth/invalid-email") {
           console.log("That email address is invalid!");
         }
-
         console.error(error);
       });
-    // navigation.navigate(SCREENS.Dashboard);
   };
-
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    console.log("user: ", user);
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
 
   return (
     <SafeAreaView style={styles.mainView}>

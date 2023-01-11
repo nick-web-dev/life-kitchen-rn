@@ -263,7 +263,7 @@ export const DashboardData = [
     id: 5,
     label: "Settings",
     icon: dash6,
-    navigateScreen: "",
+    navigateScreen: "Settings",
   },
 ];
 

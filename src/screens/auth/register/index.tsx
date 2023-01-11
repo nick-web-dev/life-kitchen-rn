@@ -19,6 +19,9 @@ import { RegisterFormValues } from "../../../context/types";
 import { AppConstData } from "../../../utils/app-data";
 import { SCREENS } from "../../../utils/Constants";
 import { AppValidation } from "../../../utils/validation";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+import { signOutUser } from "../../../network/firebaseServices";
 
 let initialValues: RegisterFormValues = {
   name: "",
@@ -31,8 +34,46 @@ const Register = ({ navigation }: any) => {
   let refValues = AppConstData.registerRef.map(() => useRef<any>());
 
   const handleSubmit = (data: any) => {
-    navigation.navigate(SCREENS.UserProfile);
     console.log("register data: ", data);
+    auth()
+      .createUserWithEmailAndPassword(data?.email, data?.password)
+      .then((res) => {
+        console.log("User account created & signed in!: ", res);
+        setNewUserData(data, res?.user?.uid);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          console.log("That email address is already in use!");
+        }
+        if (error.code === "auth/invalid-email") {
+          console.log("That email address is invalid!");
+        }
+        console.error(error);
+      });
+  };
+
+  const setNewUserData = async (data, uid) => {
+    console.log({
+      name: data?.name,
+      phoneNumber: data?.phoneNumber,
+      uid: uid,
+      email: data?.email,
+    });
+    firestore()
+      .collection("Users")
+      .add({
+        name: data?.name,
+        phoneNumber: data?.phoneNumber,
+        uid: uid,
+        email: data?.email,
+      })
+      .then((res) => {
+        console.log("User added!: ", res);
+        signOutUser();
+      })
+      .catch((error) => {
+        console.log("ERROR ADDING USER: ", error);
+      });
   };
 
   return (
@@ -84,7 +125,7 @@ const Register = ({ navigation }: any) => {
               <Form
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                // validationSchema={AppValidation.validationSchemaRegister()}
+                validationSchema={AppValidation.validationSchemaRegister()}
               >
                 <FormField
                   ref={refValues[0]}

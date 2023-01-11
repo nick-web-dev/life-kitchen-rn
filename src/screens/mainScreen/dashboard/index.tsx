@@ -1,8 +1,11 @@
 import React from "react";
 import { FlatList, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import Box from "../../../components/common/Box";
 import DashboardTile from "../../../components/DashboardTile";
 import MainHeader from "../../../components/MainHeader";
+import { signOutUser } from "../../../network/firebaseServices";
+import { setUser } from "../../../redux/slices/UserSlice";
 import { DashboardData, SCREENS } from "../../../utils/Constants";
 
 interface props {
@@ -10,9 +13,15 @@ interface props {
 }
 
 const Dashboard = ({ navigation }: props) => {
+  const dispatch = useDispatch();
+
   const navigateToScreen = (screenName: string) => {
     if (screenName === "MealPlan") {
       navigation.navigate(SCREENS.MealPlan);
+    }
+    if (screenName === "Settings") {
+      signOutUser();
+      dispatch(setUser(null));
     }
   };
 
