@@ -11,15 +11,14 @@ import auth from "@react-native-firebase/auth";
 
 const Navigation = () => {
   const { user: currentUser } = useSelector((state: any) => state.reducer.user);
+  const { userSignIn } = useSelector((state: any) => state.reducer);
   const colorScheme = Appearance.getColorScheme();
-
   const dispatch = useDispatch();
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
 
   // Handle user state changes
   function onAuthStateChanged(user) {
-    console.log("navigation user: ", user);
     dispatch(setUser(user));
     if (initializing) setInitializing(false);
   }
@@ -31,7 +30,11 @@ const Navigation = () => {
 
   return (
     <ThemeProvider theme={colorScheme === "dark" ? darkTheme : theme}>
-      {currentUser ? <AuthenticatedStack /> : <UnAuthenticatedStack />}
+      {currentUser && userSignIn?.signIn ? (
+        <AuthenticatedStack />
+      ) : (
+        <UnAuthenticatedStack />
+      )}
     </ThemeProvider>
   );
 };

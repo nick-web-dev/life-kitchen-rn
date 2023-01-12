@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Platform, SafeAreaView, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "../../../components/common/Box";
 import DashboardTile from "../../../components/DashboardTile";
 import MainHeader from "../../../components/MainHeader";
-import { signOutUser } from "../../../network/firebaseServices";
+import { fetchById, signOutUser } from "../../../network/firebaseServices";
+import { useGetUser } from "../../../network/hooks/useGetUser";
 import { setUser } from "../../../redux/slices/UserSlice";
 import { DashboardData, SCREENS } from "../../../utils/Constants";
 
@@ -13,7 +14,17 @@ interface props {
 }
 
 const Dashboard = ({ navigation }: props) => {
+  const { user } = useSelector((state: any) => state.reducer.user);
+  const [userInfo, setUserInfo] = useState(null);
   const dispatch = useDispatch();
+  const { isLoading, refetch, data } = useGetUser(user?.uid);
+
+  useEffect(() => {
+    if (data) {
+      setUserInfo(data);
+      console.log("data: ", data);
+    }
+  }, [data]);
 
   const navigateToScreen = (screenName: string) => {
     if (screenName === "MealPlan") {
@@ -27,7 +38,7 @@ const Dashboard = ({ navigation }: props) => {
 
   return (
     <SafeAreaView style={styles.mainView}>
-      <MainHeader navigation={navigation} headerLable={"Claudio Family"} />
+      <MainHeader navigation={navigation} headerLable={userInfo?.name} />
       <Box
         paddingVertical={"30"}
         flex={1}

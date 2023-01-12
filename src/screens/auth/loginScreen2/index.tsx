@@ -22,6 +22,8 @@ import { SCREENS } from "../../../utils/Constants";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/UserSlice";
 import auth from "@react-native-firebase/auth";
+import { setUserSignIn } from "../../../redux/slices/UserSignIn";
+import { AppValidation } from "../../../utils/validation";
 
 let initialValues: LoginFormValues = {
   email: "",
@@ -38,7 +40,6 @@ const LoginScreen2 = ({ navigation }: any) => {
 
   // Handle user state changes
   function onAuthStateChanged(user) {
-    console.log("user: ", user);
     dispatch(setUser(user));
     if (initializing) setInitializing(false);
   }
@@ -49,7 +50,7 @@ const LoginScreen2 = ({ navigation }: any) => {
   }, []);
 
   const handleSubmit = async (data: any) => {
-    console.log("login data: ", data);
+    dispatch(setUserSignIn(true));
     auth()
       .signInWithEmailAndPassword(data?.email, data?.password)
       .then((res) => {
@@ -114,7 +115,7 @@ const LoginScreen2 = ({ navigation }: any) => {
               <Form
                 initialValues={initialValues}
                 onSubmit={handleSubmit}
-                // validationSchema={AppValidation.validationSchemaLogin()}
+                validationSchema={AppValidation.validationSchemaLogin()}
               >
                 <FormField
                   ref={refValues[0]}

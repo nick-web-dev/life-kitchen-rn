@@ -22,6 +22,8 @@ import { AppValidation } from "../../../utils/validation";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { signOutUser } from "../../../network/firebaseServices";
+import { useDispatch } from "react-redux";
+import { setUserSignIn } from "../../../redux/slices/UserSignIn";
 
 let initialValues: RegisterFormValues = {
   name: "",
@@ -31,10 +33,11 @@ let initialValues: RegisterFormValues = {
 };
 
 const Register = ({ navigation }: any) => {
+  const dispatch = useDispatch();
   let refValues = AppConstData.registerRef.map(() => useRef<any>());
 
   const handleSubmit = (data: any) => {
-    console.log("register data: ", data);
+    dispatch(setUserSignIn(false));
     auth()
       .createUserWithEmailAndPassword(data?.email, data?.password)
       .then((res) => {
@@ -53,12 +56,6 @@ const Register = ({ navigation }: any) => {
   };
 
   const setNewUserData = async (data, uid) => {
-    console.log({
-      name: data?.name,
-      phoneNumber: data?.phoneNumber,
-      uid: uid,
-      email: data?.email,
-    });
     firestore()
       .collection("Users")
       .add({
@@ -68,8 +65,8 @@ const Register = ({ navigation }: any) => {
         email: data?.email,
       })
       .then((res) => {
-        console.log("User added!: ", res);
         signOutUser();
+        navigation.navigate(SCREENS.LoginScreen2);
       })
       .catch((error) => {
         console.log("ERROR ADDING USER: ", error);

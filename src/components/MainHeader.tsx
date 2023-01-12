@@ -16,6 +16,7 @@ const MainHeader = ({ headerLable = "Claudio Family", navigation }: props) => {
       marginTop={"20"}
       flexDirection={"row"}
       justifyContent={"space-between"}
+      marginHorizontal={"20"}
     >
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <SvgXml height={29} width={29} xml={dash2} />

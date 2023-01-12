@@ -53,10 +53,20 @@ const signInUser = async (data) => {
     });
 };
 
+const fetchById = async (uid: string) => {
+  return firestore()
+    .collection("Users")
+    .where("uid", "==", uid)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot?._docs[0]?._data;
+    });
+};
+
 const signOutUser = async () => {
   auth()
     .signOut()
     .then(() => console.log("User signed out!"));
 };
 
-export { signUpAuth, signInUser, signOutUser, setNewUserData };
+export { signUpAuth, signInUser, signOutUser, setNewUserData, fetchById };
