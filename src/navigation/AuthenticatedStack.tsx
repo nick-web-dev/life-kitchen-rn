@@ -11,6 +11,7 @@ import { Appearance } from "react-native";
 import Dashboard from "../screens/mainScreen/dashboard";
 import MealPlan from "../screens/mainScreen/mealPlan";
 import MealDetails from "../screens/mainScreen/mealDetails";
+import Inventory from "../screens/mainScreen/inventory";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const AuthenticatedStack = () => {
         <AuthStack.Screen name={SCREENS.Dashboard} component={Dashboard} />
         <AuthStack.Screen name={SCREENS.MealPlan} component={MealPlan} />
         <AuthStack.Screen name={SCREENS.MealDetails} component={MealDetails} />
+        <AuthStack.Screen name={SCREENS.Inventory} component={Inventory} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

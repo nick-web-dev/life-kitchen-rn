@@ -1,4 +1,17 @@
-import { dash3, dash4, dash5, dash6, dash7 } from "../assets/svg";
+import {
+  dash3,
+  dash4,
+  dash5,
+  dash6,
+  dash7,
+  grayCalendar,
+  grayFridge,
+  grayMeat,
+  grayTotal,
+} from "../assets/svg";
+
+import Fritos from "../assets/svg/fritos.svg";
+import Chicken from "../assets/svg/chicken.svg";
 
 export const SCREENS = {
   LoginScreen1: "LoginScreen1",
@@ -17,6 +30,7 @@ export const SCREENS = {
   Dashboard: "dashboard",
   MealPlan: "mealPlan",
   MealDetails: "mealDetails",
+  Inventory: "inventory",
 };
 
 export const reactQueryKeys = {
@@ -245,7 +259,7 @@ export const DashboardData = [
     id: 2,
     label: "Inventory",
     icon: dash4,
-    navigateScreen: "",
+    navigateScreen: "Inventory",
   },
   {
     id: 3,
@@ -312,5 +326,64 @@ export const ReplacementData = [
   {
     id: 8,
     title: "Canola Oil",
+  },
+];
+
+export const InventoryData = [
+  {
+    id: 1,
+    title: "Chicken Breast",
+    totalGram: "750g",
+    Image: Chicken,
+    ingredients: [
+      {
+        id: 1,
+        name: "Fridge",
+        icon: grayFridge,
+      },
+      {
+        id: 2,
+        name: "1 total",
+        icon: grayTotal,
+      },
+      {
+        id: 3,
+        name: "Meat",
+        icon: grayMeat,
+      },
+      {
+        id: 4,
+        name: "04/07/23",
+        icon: grayCalendar,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Fritos",
+    totalGram: "",
+    Image: Fritos,
+    ingredients: [
+      {
+        id: 1,
+        name: "Fridge",
+        icon: grayFridge,
+      },
+      {
+        id: 2,
+        name: "1 total",
+        icon: grayTotal,
+      },
+      {
+        id: 3,
+        name: "Chips",
+        icon: grayMeat,
+      },
+      {
+        id: 4,
+        name: "04/07/23",
+        icon: grayCalendar,
+      },
+    ],
   },
 ];

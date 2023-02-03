@@ -34,6 +34,9 @@ const Dashboard = ({ navigation }: props) => {
       signOutUser();
       dispatch(setUser(null));
     }
+    if (screenName === "Inventory") {
+      navigation.navigate(SCREENS.Inventory);
+    }
   };
 
   return (

@@ -11,6 +11,7 @@ import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.seekers.lifekitchen.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
+import com.brentvatne.react.ReactVideoPackage;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {

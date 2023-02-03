@@ -1,3 +1,5 @@
+import AWS from "aws-sdk";
+import { Buffer } from "buffer";
 import React from "react";
 import {
   Dimensions,
@@ -6,6 +8,11 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
+import {
+  CameraOptions,
+  launchCamera,
+  launchImageLibrary,
+} from "react-native-image-picker";
 import { SvgXml } from "react-native-svg";
 import { iPhoneIcon } from "../../../assets/svg";
 import FacebookIcon from "../../../assets/svg/facebookIcon.svg";
@@ -21,7 +28,60 @@ import { SCREENS } from "../../../utils/Constants";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+// Initialize the Amazon Cognito credentials provider
+AWS.config.region = "us-west-2"; // Region
+AWS.config.credentials = new AWS.Credentials(
+  "AKIARCS4REBAFOOI2W4A",
+  "qBwYcKMLb41xWoSEGy4022WcoPmNT96mAtIU/zmo"
+);
+const rekognition = new AWS.Rekognition();
+
+// console.log("rekognition: ", rekognition);
+
+let options: CameraOptions = {
+  includeBase64: true,
+  mediaType: "photo",
+  quality: 0.7,
+  maxWidth: 300,
+  maxHeight: 300,
+};
+
 const LoginScreen1 = ({ navigation }: any) => {
+  const launchCameraFunc = async () => {
+    const result = await launchCamera(options);
+    const { assets } = result;
+    console.log("Camera result: ", JSON.stringify(assets[0]?.uri));
+    predict(assets[0]?.base64);
+  };
+
+  const launchGallerFunc = async () => {
+    const result = await launchImageLibrary(options);
+    const { assets } = result;
+    console.log("Gallery result: ", JSON.stringify(assets[0]?.uri));
+    predict(assets[0]?.base64);
+  };
+
+  // rekognition stuff
+  const predict = async (image: string) => {
+    console.log("sending photo to Rekognition: ", image); //debugging
+    let buffer = Buffer.from(image, "base64");
+
+    const params = {
+      Image: {
+        /* required */ Bytes: buffer,
+      },
+      ProjectVersionArn:
+        "arn:aws:rekognition:us-west-2:074282246208:project/life_kitchen/version/life_kitchen.2023-01-17T20.20.07/1673979608483",
+    };
+    console.log("params: ", params);
+    const response = await rekognition
+      .detectCustomLabels(params)
+      .promise()
+      .catch((err) => console.log(err));
+    console.log("response: ", response);
+    // return response;
+  };
+
   return (
     <SafeAreaView style={styles.mainView}>
       <StatusBar translucent backgroundColor="transparent" />
@@ -80,7 +140,9 @@ const LoginScreen1 = ({ navigation }: any) => {
             withIcon
             onlyIcon
             icon={() => <GoogleIcon height={39} width={39} />}
-            onPress={() => {}}
+            onPress={() => {
+              // launchGallerFunc();
+            }}
           />
           <Box paddingHorizontal={"8"} />
           <CTAWithDynamicIcon
@@ -95,7 +157,9 @@ const LoginScreen1 = ({ navigation }: any) => {
             withIcon
             onlyIcon
             icon={() => <FacebookIcon height={39} width={39} />}
-            onPress={() => {}}
+            onPress={() => {
+              // launchCameraFunc();
+            }}
           />
           <Box paddingHorizontal={"8"} />
           <CTAWithDynamicIcon
