@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Dimensions,
   FlatList,
@@ -12,7 +12,9 @@ import { whiteCross, whiteTick } from "../../../assets/svg";
 import Box from "../../../components/common/Box";
 import CTAWithIconOnly from "../../../components/common/CTAWithIconOnly";
 import Text from "../../../components/common/Text";
+import RNBottomSheet from "@gorhom/bottom-sheet";
 import { InventoryData, SCREENS } from "../../../utils/Constants";
+import AddItem from "../../../components/AddItem";
 
 interface props {
   navigation: any;
@@ -22,6 +24,13 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const Inventory = ({ navigation }: props) => {
+  const addItemRef = useRef<RNBottomSheet>(null);
+  const onPressOpenAddItem = () => {
+    addItemRef.current?.expand();
+  };
+
+  const onPressCloseAddItem = () => addItemRef.current?.close();
+
   const CookNowButton = ({}) => {
     return (
       <TouchableOpacity
@@ -252,6 +261,7 @@ const Inventory = ({ navigation }: props) => {
           />
         </Box>
       </Box>
+      {/* <AddItem sheetRef={addItemRef} closeBottomSheet={onPressCloseAddItem} /> */}
     </SafeAreaView>
   );
 };

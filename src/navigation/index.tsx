@@ -8,6 +8,8 @@ import { theme, darkTheme } from "../theme/theme";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/UserSlice";
 import auth from "@react-native-firebase/auth";
+import { PortalProvider } from "@gorhom/portal";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Navigation = () => {
   const { user: currentUser } = useSelector((state: any) => state.reducer.user);
@@ -30,11 +32,13 @@ const Navigation = () => {
 
   return (
     <ThemeProvider theme={colorScheme === "dark" ? darkTheme : theme}>
-      {currentUser && userSignIn?.signIn ? (
-        <AuthenticatedStack />
-      ) : (
-        <UnAuthenticatedStack />
-      )}
+      <PortalProvider>
+        {currentUser && userSignIn?.signIn ? (
+          <AuthenticatedStack />
+        ) : (
+          <UnAuthenticatedStack />
+        )}
+      </PortalProvider>
     </ThemeProvider>
   );
 };
