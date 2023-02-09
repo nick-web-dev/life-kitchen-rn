@@ -56,7 +56,7 @@ const Inventory = ({ navigation }: props) => {
 
   const ModifyButton = ({}) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressOpenAddItem}>
         <Box
           borderRadius={"8"}
           width={Platform.OS === "ios" ? 120 : 120}
@@ -261,7 +261,7 @@ const Inventory = ({ navigation }: props) => {
           />
         </Box>
       </Box>
-      {/* <AddItem sheetRef={addItemRef} closeBottomSheet={onPressCloseAddItem} /> */}
+      <AddItem sheetRef={addItemRef} closeBottomSheet={onPressCloseAddItem} />
     </SafeAreaView>
   );
 };

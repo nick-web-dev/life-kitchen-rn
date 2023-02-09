@@ -329,6 +329,24 @@ export const ReplacementData = [
   },
 ];
 
+export const SearchItems = [
+  {
+    id: 1,
+    title: "Skim Milk",
+    icon: Chicken,
+  },
+  {
+    id: 2,
+    title: "Chocolate Milk",
+    icon: Chicken,
+  },
+  {
+    id: 3,
+    title: "2% Milk",
+    icon: Chicken,
+  },
+];
+
 export const InventoryData = [
   {
     id: 1,

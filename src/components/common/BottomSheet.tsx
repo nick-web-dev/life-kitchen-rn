@@ -89,21 +89,21 @@ const BottomSheet: React.FC<PropsWithChildren<BottomSheetProps>> = forwardRef(
       <Portal>
         <RNBottomSheet
           ref={bottomSheetRef}
+          snapPoints={almostFull ? almostFullPoints : almostFullPoints}
           {...(showHandle
             ? {
                 handleIndicatorStyle: {
                   backgroundColor: "white",
-                  width: 45,
-                  height: 5,
+                  width: 68,
+                  height: 6,
+                  paddingVertical: 5,
                 },
               }
             : { handleStyle: styles.handle })}
-          snapPoints={almostFull ? almostFullPoints : animatedSnapPoints}
-          handleHeight={animatedHandleHeight}
-          contentHeight={animatedContentHeight}
           onChange={onChange}
-          {...COMMON_BOTTOM_SHEET_PROPS}
-          index={index}
+          index={0}
+          style={{ backgroundColor: "#262626", borderRadius: 40 }}
+          backgroundComponent={null}
         >
           <BottomSheetView
             style={styles.bottomSheetViewContainer}

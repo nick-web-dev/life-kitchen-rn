@@ -14,6 +14,7 @@ const palette = {
   grey4: "#777777",
   grey5: "##989898",
   grey6: "#474747",
+  grey7: "#262626",
 
   lightGrey: "#CACACA",
 
@@ -56,6 +57,7 @@ export const theme = createTheme({
     grey4: palette.grey4,
     grey5: palette.grey5,
     grey6: palette.grey6,
+    grey7: palette.grey7,
 
     lightGrey: palette.lightGrey,
 
@@ -376,6 +378,7 @@ export const darkTheme: Theme = {
     grey4: palette.grey4,
     grey5: palette.grey5,
     grey6: palette.grey6,
+    grey7: palette.grey7,
 
     lightGrey: palette.lightGrey,
 
