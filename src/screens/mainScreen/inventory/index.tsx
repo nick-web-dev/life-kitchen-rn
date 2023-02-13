@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -8,13 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { whiteCross, whiteTick } from "../../../assets/svg";
+import { WhiteBin, whiteCross, whiteTick } from "../../../assets/svg";
 import Box from "../../../components/common/Box";
 import CTAWithIconOnly from "../../../components/common/CTAWithIconOnly";
 import Text from "../../../components/common/Text";
 import RNBottomSheet from "@gorhom/bottom-sheet";
 import { InventoryData, SCREENS } from "../../../utils/Constants";
 import AddItem from "../../../components/AddItem";
+import { SwipeListView } from "react-native-swipe-list-view";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface props {
   navigation: any;
@@ -24,6 +26,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const Inventory = ({ navigation }: props) => {
+  const [itemsCompleted, setItemsCompleted] = useState(false);
   const addItemRef = useRef<RNBottomSheet>(null);
   const onPressOpenAddItem = () => {
     addItemRef.current?.expand();
@@ -83,6 +86,7 @@ const Inventory = ({ navigation }: props) => {
 
   const MeatTile = ({ item }: any) => {
     const { name, icon } = item;
+
     return (
       <Box
         flexDirection={"row"}
@@ -110,14 +114,15 @@ const Inventory = ({ navigation }: props) => {
   };
 
   const InventoryTile = ({ item }: any) => {
-    const { Image } = item;
-    const NewImage = Image;
+    const itemData = item?.item;
+    const NewImage = itemData?.Image;
 
     return (
       <Box
         flexDirection={"row"}
         justifyContent={"space-between"}
-        marginHorizontal={"40"}
+        paddingHorizontal={"40"}
+        backgroundColor={"black1"}
       >
         <Box>
           <NewImage width={120} height={120} />
@@ -133,7 +138,7 @@ const Inventory = ({ navigation }: props) => {
               alignSelf={"center"}
               marginTop={"20"}
             >
-              {item?.title}
+              {itemData?.title}
             </Text>
             <Text
               marginHorizontal={"20"}
@@ -145,13 +150,14 @@ const Inventory = ({ navigation }: props) => {
               alignSelf={"center"}
               marginTop={"20"}
             >
-              {item?.totalGram}
+              {itemData?.totalGram}
             </Text>
           </Box>
-          <Box flexDirection={"row"}>
+          <Box flexDirection={"column"}>
             <FlatList
+              contentContainerStyle={{ paddingBottom: 20, flex: 1 }}
               horizontal={true}
-              data={item?.ingredients}
+              data={itemData?.ingredients}
               renderItem={({ item }: any) => <MeatTile item={item} />}
               keyExtractor={(item) => item.id.toString()}
               ItemSeparatorComponent={({ item }: any) => (
@@ -206,28 +212,40 @@ const Inventory = ({ navigation }: props) => {
             icon={() => <SvgXml height={20} width={20} xml={whiteCross} />}
             onPress={() => navigation.goBack()}
           />
-          <Text
-            lineHeight={40}
-            numberOfLines={1}
-            fontSize={30}
-            color={"white"}
-            fontWeight={"400"}
-            alignSelf={"center"}
-            marginTop={"20"}
+          <TouchableOpacity>
+            <Box marginTop={"10"}>
+              <Text
+                lineHeight={40}
+                numberOfLines={1}
+                fontSize={30}
+                color={"white"}
+                fontWeight={"400"}
+                alignSelf={"center"}
+                marginTop={"20"}
+              >
+                Add Items
+              </Text>
+            </Box>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setItemsCompleted(true);
+            }}
           >
-            Add Items
-          </Text>
-          <Text
-            lineHeight={40}
-            numberOfLines={1}
-            fontSize={25}
-            color={"white"}
-            fontWeight={"400"}
-            alignSelf={"center"}
-            marginTop={"20"}
-          >
-            Done
-          </Text>
+            <Box marginTop={"10"}>
+              <Text
+                lineHeight={40}
+                numberOfLines={1}
+                fontSize={25}
+                color={"white"}
+                fontWeight={"400"}
+                alignSelf={"center"}
+                marginTop={"20"}
+              >
+                Done
+              </Text>
+            </Box>
+          </TouchableOpacity>
         </Box>
         <Box marginTop={"40"} marginHorizontal={"40"}>
           <Text
@@ -238,7 +256,7 @@ const Inventory = ({ navigation }: props) => {
             fontWeight={"400"}
             marginTop={"20"}
           >
-            Grocery trip?
+            {itemsCompleted ? "All done?" : "Grocery trip?"}
           </Text>
           <Text
             lineHeight={57}
@@ -247,20 +265,108 @@ const Inventory = ({ navigation }: props) => {
             color={"white"}
             fontWeight={"400"}
           >
-            Update your inventory
+            {itemsCompleted ? "Review your new items" : "Update your inventory"}
           </Text>
         </Box>
-        <Box marginTop={"40"}>
-          <FlatList
+        <Box flex={1} marginTop={"40"}>
+          <SwipeListView
             data={InventoryData}
-            renderItem={({ item }: any) => <InventoryTile item={item} />}
-            keyExtractor={(item) => item.id.toString()}
+            renderItem={(data, rowMap) => <InventoryTile item={data} />}
+            renderHiddenItem={(data, rowMap) => (
+              <Box flexDirection={"row"} justifyContent={"flex-end"}>
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log("data: ", data);
+                  }}
+                >
+                  <Box
+                    width={100}
+                    height={150}
+                    backgroundColor={"red1"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    paddingBottom={"25"}
+                  >
+                    <SvgXml
+                      height={Platform.OS === "android" ? 20 : 24}
+                      width={Platform.OS === "android" ? 20 : 24}
+                      xml={WhiteBin}
+                    />
+                  </Box>
+                </TouchableOpacity>
+              </Box>
+            )}
+            leftOpenValue={0}
+            rightOpenValue={-100}
             ItemSeparatorComponent={({ item }: any) => (
               <Box paddingVertical={"15"} />
             )}
           />
         </Box>
+        {itemsCompleted ? (
+          <Box
+            flexDirection={"row"}
+            height={126}
+            justifyContent={"space-between"}
+            paddingTop={"10"}
+            paddingHorizontal={"30"}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setItemsCompleted(false);
+              }}
+            >
+              <Box
+                height={70}
+                borderRadius={"8"}
+                width={190}
+                borderWidth={1}
+                borderColor={"white"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Text
+                  lineHeight={23}
+                  numberOfLines={1}
+                  fontSize={20}
+                  color={"white"}
+                  fontWeight={"400"}
+                  alignSelf={"center"}
+                >
+                  Edit
+                </Text>
+              </Box>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setItemsCompleted(false);
+              }}
+            >
+              <Box
+                height={70}
+                borderRadius={"8"}
+                width={190}
+                backgroundColor={"brandGreen"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Text
+                  lineHeight={23}
+                  numberOfLines={1}
+                  fontSize={20}
+                  color={"white"}
+                  fontWeight={"700"}
+                  alignSelf={"center"}
+                >
+                  Complete
+                </Text>
+              </Box>
+            </TouchableOpacity>
+          </Box>
+        ) : null}
       </Box>
+
       <AddItem sheetRef={addItemRef} closeBottomSheet={onPressCloseAddItem} />
     </SafeAreaView>
   );

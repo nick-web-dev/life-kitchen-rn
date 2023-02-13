@@ -10,8 +10,8 @@ import {
   grayTotal,
 } from "../assets/svg";
 
-import Fritos from "../assets/svg/fritos.svg";
-import Chicken from "../assets/svg/chicken.svg";
+import FritosImage from "../assets/svg/fritos.svg";
+import ChickenImage from "../assets/svg/chicken.svg";
 
 export const SCREENS = {
   LoginScreen1: "LoginScreen1",
@@ -333,26 +333,26 @@ export const SearchItems = [
   {
     id: 1,
     title: "Skim Milk",
-    icon: Chicken,
+    icon: ChickenImage,
   },
   {
     id: 2,
     title: "Chocolate Milk",
-    icon: Chicken,
+    icon: ChickenImage,
   },
   {
     id: 3,
     title: "2% Milk",
-    icon: Chicken,
+    icon: ChickenImage,
   },
 ];
 
 export const InventoryData = [
   {
-    id: 1,
+    id: 0,
     title: "Chicken Breast",
     totalGram: "750g",
-    Image: Chicken,
+    Image: ChickenImage,
     ingredients: [
       {
         id: 1,
@@ -377,10 +377,10 @@ export const InventoryData = [
     ],
   },
   {
-    id: 2,
+    id: 1,
     title: "Fritos",
     totalGram: "",
-    Image: Fritos,
+    Image: FritosImage,
     ingredients: [
       {
         id: 1,
