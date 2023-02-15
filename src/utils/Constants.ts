@@ -8,10 +8,22 @@ import {
   grayFridge,
   grayMeat,
   grayTotal,
+  whiteEnergyDrink,
+  whiteMeat,
+  whiteMilkBottle,
+  whiteNaturalVeggie,
+  whiteToast,
+  whiteWaterMelon,
 } from "../assets/svg";
 
 import FritosImage from "../assets/svg/fritos.svg";
 import ChickenImage from "../assets/svg/chicken.svg";
+import DashboardList1 from "../assets/svg/DashboardList1.svg";
+import DashboardList2 from "../assets/svg/DashboardList2.svg";
+import DashboardList3 from "../assets/svg/DashboardList3.svg";
+import Expiring1 from "../assets/svg/expiring1.svg";
+import Expiring2 from "../assets/svg/expiring2.svg";
+import Expiring3 from "../assets/svg/expiring3.svg";
 
 export const SCREENS = {
   LoginScreen1: "LoginScreen1",
@@ -31,6 +43,7 @@ export const SCREENS = {
   MealPlan: "mealPlan",
   MealDetails: "mealDetails",
   Inventory: "inventory",
+  InventoryDashboard: "inventoryDashboard",
 };
 
 export const reactQueryKeys = {
@@ -403,5 +416,109 @@ export const InventoryData = [
         icon: grayCalendar,
       },
     ],
+  },
+];
+
+export const InventoryImageList = [
+  {
+    id: 1,
+    img: DashboardList1,
+    title: "Healthy Snacks",
+  },
+  {
+    id: 2,
+    img: DashboardList2,
+    title: "Quick Lunch",
+  },
+  {
+    id: 3,
+    img: DashboardList3,
+    title: "Easy Dinner",
+  },
+  {
+    id: 4,
+    img: DashboardList3,
+    title: "Easy Dinner",
+  },
+];
+
+export const ExpiringList = [
+  {
+    id: 1,
+    title: "Broccoli",
+    quantity: "200g",
+    price: "$2.75",
+    img: Expiring1,
+  },
+  {
+    id: 2,
+    title: "Lo mein",
+    quantity: "1lb",
+    price: "$9.95",
+    img: Expiring2,
+  },
+  {
+    id: 3,
+    title: "Chicken Breast",
+    quantity: "2lb",
+    price: "$13.50",
+    img: Expiring3,
+  },
+];
+
+export const beveragesList = [
+  {
+    id: 1,
+    title: "Meats",
+    icon: whiteMeat,
+    background: "orange1",
+  },
+  {
+    id: 2,
+    title: "Grains",
+    icon: whiteToast,
+    background: "yellow2",
+  },
+  {
+    id: 3,
+    title: "Fruits",
+    icon: whiteWaterMelon,
+    background: "red2",
+  },
+  {
+    id: 4,
+    title: "Veggies",
+    icon: whiteNaturalVeggie,
+    background: "green1",
+  },
+  {
+    id: 5,
+    title: "Dairy",
+    icon: whiteMilkBottle,
+    background: "blue1",
+  },
+  {
+    id: 6,
+    title: "Beverages",
+    icon: whiteEnergyDrink,
+    background: "purple1",
+  },
+];
+
+export const InventoryButtons = [
+  {
+    id: 1,
+    active: true,
+    title: "Pantry",
+  },
+  {
+    id: 2,
+    active: false,
+    title: "Fridge",
+  },
+  {
+    id: 3,
+    active: false,
+    title: "Cabinet",
   },
 ];

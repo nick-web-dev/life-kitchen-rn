@@ -15,16 +15,25 @@ const palette = {
   grey5: "##989898",
   grey6: "#474747",
   grey7: "#262626",
+  grey8: "#464646",
 
   lightGrey: "#CACACA",
 
+  blue1: "#35C2FF",
+
+  purple1: "#9E51FF",
+
   red1: "#FF4853",
+  red2: "#FF4853",
 
   green1: "#05B68B",
 
   black1: "#171717",
 
   yellow1: "#FFCB45",
+  yellow2: "#FFBB22",
+
+  orange1: "#E37B00",
 };
 
 const commonFontStyles = {
@@ -58,16 +67,25 @@ export const theme = createTheme({
     grey5: palette.grey5,
     grey6: palette.grey6,
     grey7: palette.grey7,
+    grey8: palette.grey8,
 
     lightGrey: palette.lightGrey,
 
+    purple1: palette.purple1,
+
+    blue1: palette.blue1,
+
     red1: palette.red1,
+    red2: palette.red2,
 
     green1: palette.green1,
 
     black1: palette.black1,
 
     yellow1: palette.yellow1,
+    yellow2: palette.yellow2,
+
+    orange1: palette.orange1,
   },
   spacing: {
     "0": 0,
@@ -366,8 +384,8 @@ export const darkTheme: Theme = {
   ...theme,
   colors: {
     brandGreen: palette.greenPrimary,
-    white: palette.white,
     secondary: palette.secondaryGreen,
+    white: palette.white,
     transparent: palette.transparent,
     black: palette.black,
     backgroundGrey: palette.backgroundGrey,
@@ -379,15 +397,24 @@ export const darkTheme: Theme = {
     grey5: palette.grey5,
     grey6: palette.grey6,
     grey7: palette.grey7,
+    grey8: palette.grey8,
 
     lightGrey: palette.lightGrey,
 
+    purple1: palette.purple1,
+
     red1: palette.red1,
+    red2: palette.red2,
+
+    blue1: palette.blue1,
 
     green1: palette.green1,
 
     black1: palette.black1,
 
     yellow1: palette.yellow1,
+    yellow2: palette.yellow2,
+
+    orange1: palette.orange1,
   },
 };
