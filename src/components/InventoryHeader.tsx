@@ -25,7 +25,7 @@ const InventoryHeader = ({
       flexDirection={"row"}
       marginHorizontal={"30"}
       paddingVertical={"10"}
-      paddingTop={"20"}
+      paddingTop={Platform.OS === "android" ? "15" : "30"}
     >
       <Box justifyContent={"center"}>
         <SvgXml height={30} width={42} xml={dash8} />

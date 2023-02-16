@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
+import AlphabetList from "react-native-flatlist-alphabet";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SvgXml } from "react-native-svg";
 import { useSelector } from "react-redux";
-import { redSquareCross, whiteTruck } from "../../../assets/svg";
+import { redSquareCross, whiteDateIcon, whiteTruck } from "../../../assets/svg";
 import { Box, Text } from "../../../components/common";
 import InventoryHeader from "../../../components/InventoryHeader";
 import { useGetUser } from "../../../network/hooks/useGetUser";
@@ -12,6 +13,7 @@ import {
   ExpiringList,
   InventoryButtons,
   InventoryImageList,
+  YourData,
 } from "../../../utils/Constants";
 
 interface props {
@@ -326,7 +328,8 @@ const InventoryDashboard = ({ navigation }: props) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          setActiveInActive(item, true);
+          console.log("called");
+          // setActiveInActive(item, true);
         }}
       >
         <Box
@@ -355,12 +358,18 @@ const InventoryDashboard = ({ navigation }: props) => {
   const InventoryTile = () => {
     return (
       <Box
-        height={362}
+        height={Platform.OS === "ios" ? 362 : 340}
         borderRadius={"8"}
         backgroundColor={"grey7"}
         padding={"20"}
       >
-        <Box flexDirection={"row"} justifyContent={"space-between"}>
+        <Box
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          paddingBottom={"20"}
+          borderBottomWidth={1}
+          borderBottomColor={"grey9"}
+        >
           <Text
             lineHeight={27}
             numberOfLines={1}
@@ -401,14 +410,123 @@ const InventoryDashboard = ({ navigation }: props) => {
             />
           </Box>
         </Box>
+        <Box flexDirection={"row"}>
+          <Box paddingVertical={"10"} paddingRight={"15"}>
+            {TextBtn("All Items", "34")}
+            {TextBtn("Items In Stock", "29")}
+            {TextBtn("Items Out of Stock", "5")}
+            {TextBtn("Expiring Soon", "11")}
+          </Box>
+          <Box
+            height={Platform.OS == "android" ? 240 : 265}
+            borderRightWidth={1}
+            borderRightColor={"grey9"}
+          />
+          <Box paddingLeft={"15"} flex={1} marginVertical={"10"}>
+            <AlphabetList
+              data={YourData}
+              renderItem={YourRenderItemFunction}
+              renderSectionHeader={() => {
+                return <Box />;
+              }}
+              indexLetterColor={"#C8C8C8"}
+              style={{
+                height: Platform.OS === "ios" ? 260 : 230,
+              }}
+              getItemHeight={() => 20}
+              sectionHeaderHeight={0}
+              indexLetterSize={9}
+              alphabetContainer={{
+                alignSelf: "center",
+                justifyContent: "center",
+              }}
+            />
+          </Box>
+        </Box>
       </Box>
+    );
+  };
+
+  const YourRenderItemFunction = (item) => {
+    console.log("item: ", item);
+    return (
+      <Box
+        flexDirection={"row"}
+        justifyContent={"space-between"}
+        paddingVertical={"10"}
+      >
+        <Box flex={1} justifyContent={"flex-start"}>
+          <Text
+            lineHeight={18}
+            numberOfLines={1}
+            fontSize={16}
+            color={"white"}
+            fontWeight={"400"}
+          >
+            {item?.value}
+          </Text>
+        </Box>
+        <Box justifyContent={"center"} flexDirection={"row"} flex={1}>
+          <SvgXml
+            height={Platform.OS === "android" ? 20 : 24}
+            width={Platform.OS === "android" ? 20 : 24}
+            xml={whiteDateIcon}
+          />
+          <Text
+            paddingLeft={"10"}
+            lineHeight={13}
+            numberOfLines={1}
+            fontSize={12}
+            color={"grey3"}
+            fontWeight={"400"}
+            alignSelf={"center"}
+          >
+            {item?.date}
+          </Text>
+        </Box>
+        <Box />
+      </Box>
+    );
+  };
+
+  const TextBtn = (title: string, count: string) => {
+    return (
+      <TouchableOpacity>
+        <Box
+          paddingVertical={"10"}
+          width={250}
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+        >
+          <Text
+            lineHeight={18}
+            numberOfLines={1}
+            fontSize={16}
+            color={"white"}
+            fontWeight={"400"}
+            alignSelf={"center"}
+          >
+            {title}
+          </Text>
+          <Text
+            lineHeight={13}
+            numberOfLines={1}
+            fontSize={12}
+            color={"white"}
+            fontWeight={"400"}
+            alignSelf={"center"}
+          >
+            {count}
+          </Text>
+        </Box>
+      </TouchableOpacity>
     );
   };
 
   return (
     <SafeAreaView style={styles.mainView}>
       <InventoryHeader navigation={navigation} headerLable={userInfo?.name} />
-      <Box marginTop={"0"} paddingLeft={"30"}>
+      <Box marginTop={Platform.OS === "ios" ? "30" : "10"} paddingLeft={"30"}>
         <FlatList
           horizontal={true}
           data={InventoryImageList}
@@ -419,7 +537,7 @@ const InventoryDashboard = ({ navigation }: props) => {
           )}
         />
       </Box>
-      {/* <Box marginVertical={"20"} /> */}
+      <Box marginVertical={Platform.OS === "ios" ? "20" : "10"} />
       <Box paddingHorizontal={"30"}>
         <FlatList
           scrollEnabled={false}
@@ -432,9 +550,11 @@ const InventoryDashboard = ({ navigation }: props) => {
           )}
         />
       </Box>
+      <Box marginVertical={Platform.OS === "ios" ? "10" : "5"} />
       <Box>
         <ExpiringTile />
       </Box>
+      <Box marginVertical={Platform.OS === "ios" ? "10" : "0"} />
       <Box marginHorizontal={"30"}>
         <InventoryTile />
       </Box>
