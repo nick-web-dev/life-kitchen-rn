@@ -15,6 +15,7 @@ import { BottomSheet, Text } from "./common";
 import Box from "./common/Box";
 import Input from "./common/Input";
 import { SearchItems } from "../utils/Constants";
+import { useBottomSheetBackHandler } from "../hooks/useBottomSheetBackHandler";
 
 interface AddItemBottomSheetProps {
   closeBottomSheet: () => void;
@@ -54,6 +55,7 @@ const windowHeight = Dimensions.get("window").height;
 
 const AddItem: React.FC<AddItemBottomSheetProps> = (props) => {
   const { sheetRef, closeBottomSheet } = props;
+  const { handleSheetPositionChange } = useBottomSheetBackHandler(sheetRef);
   const [searchValue, setSearch] = useState("");
   console.log("windowHeight: ", windowHeight);
 
@@ -199,7 +201,11 @@ const AddItem: React.FC<AddItemBottomSheetProps> = (props) => {
   };
 
   return (
-    <BottomSheet showHandle={true} ref={sheetRef}>
+    <BottomSheet
+      onChange={handleSheetPositionChange}
+      showHandle={true}
+      ref={sheetRef}
+    >
       <Box
         backgroundColor={"grey7"}
         borderRadius={"40"}

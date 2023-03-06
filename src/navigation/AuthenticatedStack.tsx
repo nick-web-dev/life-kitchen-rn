@@ -29,7 +29,7 @@ const AuthenticatedStack = () => {
         <AuthStack.Screen name={SCREENS.Inventory} component={Inventory} />
         <AuthStack.Screen
           name={SCREENS.InventoryDashboard}
-          component={InventoryDashboard}
+          component={Inventory}
         />
       </AuthStack.Navigator>
     </NavigationContainer>

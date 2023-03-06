@@ -1,4 +1,7 @@
-import React, { useRef, useState } from "react";
+import RNBottomSheet from "@gorhom/bottom-sheet";
+import AWS from "aws-sdk";
+import { Buffer } from "buffer";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -7,16 +10,24 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import {
+  launchCamera,
+  launchImageLibrary,
+  CameraOptions,
+} from "react-native-image-picker";
 import { SvgXml } from "react-native-svg";
+import { SwipeListView } from "react-native-swipe-list-view";
 import { WhiteBin, whiteCross, whiteTick } from "../../../assets/svg";
+import AddItem from "../../../components/AddItem";
 import Box from "../../../components/common/Box";
 import CTAWithIconOnly from "../../../components/common/CTAWithIconOnly";
 import Text from "../../../components/common/Text";
-import RNBottomSheet from "@gorhom/bottom-sheet";
+import IamgePickerBottomSheet from "../../../components/ImagePickerBottomSheet";
 import { InventoryData, SCREENS } from "../../../utils/Constants";
-import AddItem from "../../../components/AddItem";
-import { SwipeListView } from "react-native-swipe-list-view";
-import { ScrollView } from "react-native-gesture-handler";
+import firestore from "@react-native-firebase/firestore";
+import { useGetUser } from "../../../network/hooks/useGetUser";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 interface props {
   navigation: any;
@@ -25,11 +36,132 @@ interface props {
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+let options: CameraOptions = {
+  includeBase64: true,
+  mediaType: "photo",
+  quality: 0.7,
+  maxWidth: 300,
+  maxHeight: 300,
+};
+
+// Initialize the Amazon Cognito credentials provider
+AWS.config.region = "us-west-2"; // Region
+AWS.config.credentials = new AWS.Credentials(
+  "AKIARCS4REBAFOOI2W4A",
+  "qBwYcKMLb41xWoSEGy4022WcoPmNT96mAtIU/zmo"
+);
+const rekognition = new AWS.Rekognition();
+
+console.log("rekognition: ", rekognition);
+
 const Inventory = ({ navigation }: props) => {
+  const { user } = useSelector((state: any) => state.reducer.user);
   const [itemsCompleted, setItemsCompleted] = useState(false);
   const addItemRef = useRef<RNBottomSheet>(null);
+  const imagePickerRef = useRef<RNBottomSheet>(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [allInventories, setAllInventories] = useState(null);
+  const { isLoading, refetch, data } = useGetUser(user?.uid);
+
+  useEffect(() => {
+    if (data) {
+      setUserInfo(data);
+      console.log("data: ", data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    fetchInventory();
+  }, [userInfo]);
+
+  const fetchInventory = async () => {
+    if (userInfo) {
+      console.log("userInfo: ", userInfo?.uid);
+      const { uid } = userInfo;
+      const snapshot = await firestore()
+        .collection("inventory")
+        .where("ownerUid", "==", uid)
+        .get();
+      console.log("snapshot: ", snapshot);
+      if (snapshot.docs.length > 0) {
+        let allDocs = snapshot.docs.map((doc) => console.log(doc.data()));
+        setAllInventories(allDocs);
+      }
+    }
+  };
+
+  const addNewItemFireStore = async () => {
+    firestore()
+      .collection("Users")
+      .add({
+        date: moment().format(),
+        name: "carrot",
+        uid: userInfo?.uid,
+        quantity: "1",
+        itemType: "vegetable",
+        total: "1",
+      })
+      .then((res) => {
+        fetchInventory();
+      })
+      .catch((error) => {
+        console.log("ERROR ADDING USER: ", error);
+      });
+  };
+
   const onPressOpenAddItem = () => {
     addItemRef.current?.expand();
+  };
+
+  const onPressOpenImagePicker = () => {
+    imagePickerRef.current?.expand();
+  };
+
+  const onPressCloseImagePicker = () => {
+    imagePickerRef.current?.close();
+  };
+
+  const launchCameraFunc = async () => {
+    const result = await launchCamera(options);
+    const { assets } = result;
+    console.log("Camera result: ", JSON.stringify(assets[0]?.uri));
+    predict(assets[0]?.base64);
+  };
+
+  const launchGallerFunc = async () => {
+    const result = await launchImageLibrary(options);
+    const { assets } = result;
+    console.log("Gallery result: ", JSON.stringify(assets[0]?.uri));
+    predict(assets[0]?.base64);
+  };
+
+  // rekognition stuff
+  const predict = async (image: string) => {
+    console.log("sending photo to Rekognition: ", image); //debugging
+    let buffer = Buffer.from(image, "base64");
+
+    const params = {
+      Image: {
+        /* required */ Bytes: buffer,
+      },
+      ProjectVersionArn:
+        "arn:aws:rekognition:us-west-2:074282246208:project/life_kitchen/version/life_kitchen.2023-01-17T20.20.07/1673979608483",
+    };
+    console.log("params: ", params);
+    const response = await rekognition
+      .detectCustomLabels(params)
+      .promise()
+      .catch((err) => console.log(err));
+    console.log("response: ", response);
+    // return response;
+  };
+
+  const openPicker = (imageBool: boolean) => {
+    if (imageBool) {
+      launchCameraFunc();
+    } else {
+      launchGallerFunc();
+    }
   };
 
   const onPressCloseAddItem = () => addItemRef.current?.close();
@@ -247,26 +379,58 @@ const Inventory = ({ navigation }: props) => {
             </Box>
           </TouchableOpacity>
         </Box>
-        <Box marginTop={"40"} marginHorizontal={"40"}>
-          <Text
-            lineHeight={28}
-            numberOfLines={1}
-            fontSize={25}
-            color={"white"}
-            fontWeight={"400"}
-            marginTop={"20"}
-          >
-            {itemsCompleted ? "All done?" : "Grocery trip?"}
-          </Text>
-          <Text
-            lineHeight={57}
-            numberOfLines={1}
-            fontSize={40}
-            color={"white"}
-            fontWeight={"400"}
-          >
-            {itemsCompleted ? "Review your new items" : "Update your inventory"}
-          </Text>
+        <Box
+          justifyContent={"space-between"}
+          marginTop={"40"}
+          marginHorizontal={"40"}
+          flexDirection={"row"}
+        >
+          <Box>
+            <Text
+              lineHeight={28}
+              numberOfLines={1}
+              fontSize={25}
+              color={"white"}
+              fontWeight={"400"}
+              marginTop={"20"}
+            >
+              {itemsCompleted ? "All done?" : "Grocery trip?"}
+            </Text>
+            <Text
+              lineHeight={57}
+              numberOfLines={1}
+              fontSize={40}
+              color={"white"}
+              fontWeight={"400"}
+            >
+              {itemsCompleted
+                ? "Review your new items"
+                : "Update your inventory"}
+            </Text>
+          </Box>
+          <Box justifyContent={"center"}>
+            <TouchableOpacity onPress={() => onPressOpenImagePicker()}>
+              <Box
+                borderRadius={"8"}
+                width={Platform.OS === "ios" ? 120 : 120}
+                height={48}
+                backgroundColor={"green1"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Text
+                  lineHeight={20}
+                  numberOfLines={1}
+                  fontSize={20}
+                  color={"white"}
+                  fontWeight={"400"}
+                  alignSelf={"center"}
+                >
+                  Add Item
+                </Text>
+              </Box>
+            </TouchableOpacity>
+          </Box>
         </Box>
         <Box flex={1} marginTop={"40"}>
           <SwipeListView
@@ -366,7 +530,11 @@ const Inventory = ({ navigation }: props) => {
           </Box>
         ) : null}
       </Box>
-
+      <IamgePickerBottomSheet
+        openPicker={openPicker}
+        sheetRef={imagePickerRef}
+        closeBottomSheet={onPressCloseImagePicker}
+      />
       <AddItem sheetRef={addItemRef} closeBottomSheet={onPressCloseAddItem} />
     </SafeAreaView>
   );
