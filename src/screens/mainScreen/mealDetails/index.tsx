@@ -28,7 +28,11 @@ import MealIcon8 from "../../../assets/svg/mealIcon10.svg";
 import FryPan from "../../../assets/svg/fryPan.svg";
 import Box from "../../../components/common/Box";
 import Text from "../../../components/common/Text";
-import { IngredientsData, ReplacementData } from "../../../utils/Constants";
+import {
+  IngredientsData,
+  ReplacementData,
+  SCREENS,
+} from "../../../utils/Constants";
 
 interface props {
   navigation: any;
